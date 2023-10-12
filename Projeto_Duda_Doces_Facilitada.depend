@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1697073818 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\main.c
+	<locale.h>
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	<stdlib.h>
+
+1696905777 source:c:\users\43627371895\desktop\projeto_esboço-inicio\biblioteca\c1.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
