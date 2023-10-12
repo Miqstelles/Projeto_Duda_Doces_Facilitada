@@ -13,6 +13,7 @@ typedef struct ingredientes{
 void adicionarIngrediente(){
     FILE * pFile;
     ingredientes *ing;
+    ingredientes ing1;
     int n, i;
 
     printf("Quantos ingredientes deseja adicionar?: ");
@@ -21,9 +22,14 @@ void adicionarIngrediente(){
     ing = (ingredientes*)calloc(n, sizeof(ingredientes));
     pFile = fopen("estoque_ingredientes.txt", "a");
 
-    for(i=0; i<n; i++){
+    for (i = 0; i < n; i++) {
         printf("Insira o codigo do produto: ");
         scanf("%i", &ing[i].codigo);
+
+        while (codigoJaExiste(ing[i].codigo)) {
+            printf("Código já existe. Insira um novo código: ");
+            scanf("%i", &ing[i].codigo);
+        }
 
         fflush(stdin);
         printf("Insira o nome do produto: ");
@@ -32,10 +38,26 @@ void adicionarIngrediente(){
         printf("Insira a quantidade em estoque: ");
         scanf("%i", &ing[i].quantidade);
 
-        fwrite(&ing[i], sizeof(ingredientes),1, pFile);
+        fwrite(&ing[i], sizeof(ingredientes), 1, pFile);
     }
     fclose(pFile);
 }
+
+int codigoJaExiste(int codigo) {
+    FILE *file = fopen("estoque_ingredientes.txt", "r");
+    if (file) {
+        ingredientes temp;
+        while (fread(&temp, sizeof(ingredientes), 1, file)) {
+            if (temp.codigo == codigo) {
+                fclose(file);
+                return 1;
+            }
+        }
+        fclose(file);
+    }
+    return 0;
+}
+
 void listarIngrediente(){
     ingredientes ing1;
     FILE * pFile;
