@@ -3,7 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <windows.h>
 
+// TELA CONTROLE ESTOQUE DE INGREDIENTES
 typedef struct ingredientes{
     char nome[80];
     int codigo;
@@ -13,7 +15,6 @@ typedef struct ingredientes{
 void adicionarIngrediente(){
     FILE * pFile;
     ingredientes *ing;
-    ingredientes ing1;
     int n, i;
 
     printf("Quantos ingredientes deseja adicionar?: ");
@@ -45,8 +46,10 @@ void adicionarIngrediente(){
 
 int codigoJaExiste(int codigo) {
     FILE *file = fopen("estoque_ingredientes.txt", "r");
-    if (file) {
+
+    if(file) {
         ingredientes temp;
+
         while (fread(&temp, sizeof(ingredientes), 1, file)) {
             if (temp.codigo == codigo) {
                 fclose(file);
@@ -55,6 +58,7 @@ int codigoJaExiste(int codigo) {
         }
         fclose(file);
     }
+
     return 0;
 }
 
@@ -133,6 +137,7 @@ void atualizarIngrediente(){
         }
         fwrite(&ing1, sizeof(ingredientes), 1, pFile1);
     }
+
     fclose(pFile);
     fclose(pFile1);
 
@@ -166,6 +171,7 @@ void deletarIngrediente(){
         }
         else fwrite(&ing1, sizeof(ingredientes),1, pFile1);
     }
+
     fclose(pFile);
     fclose(pFile1);
 
@@ -183,9 +189,7 @@ void deletarIngrediente(){
     else printf("Ingrediente não encontrado!\n");
 }
 
-int main() {
-    setlocale(LC_ALL, "Portuguese");
-
+void telaEstoqueIngredientes(){
     int escolha;
 
     do{
@@ -237,6 +241,76 @@ int main() {
                 break;
         }
     }while(escolha != 0);
+
+    system("cls");
+}
+// TELA CONTROLE ESTOQUE DE INGREDIENTES //
+
+void barraDeLoading(){
+	system("color 0A");
+
+	char a = 177, b = 219;
+
+	printf("\n\n\n\n");
+	printf("\n\n\n\n");
+	printf("\n\n\n\n\t\t\t\t\t Loading...\n\n");
+	printf("\t\t\t\t\t");
+
+	for (int i = 0; i < 26; i++) printf("%c", a);
+
+	printf("\r");
+	printf("\t\t\t\t\t");
+
+	for (int i = 0; i < 26; i++) {
+		printf("%c", b);
+		Sleep(100);
+	}
+
+    system("color 7");
+	system("cls");
+}
+
+int main() {
+    barraDeLoading();
+
+    setlocale(LC_ALL, "Portuguese");
+
+    int escolha;
+
+    do{
+        printf("\nBem Vindo(A)");
+        printf("\n1 - Cardapio");
+        printf("\n2 - Vendas");
+        printf("\n3 - Estoque de Ingredientes");
+
+        int read = 0;
+
+        while(read != 1){
+            printf("\n\nInsira uma opção: ");
+            read = scanf("%i", &escolha);
+
+            if(read != 1){
+                printf("ERRO! Digite uma opção valida");
+                scanf("%*[^\n]");
+            }
+        }
+
+        switch(escolha){
+            case 1:
+                system("cls");
+                printf("Cardapio");
+                break;
+            case 2:
+                system("cls");
+                printf("Vendas");
+                break;
+            case 3:
+                system("cls");
+                telaEstoqueIngredientes();
+                break;
+        }
+    }while(escolha !=0);
+
 
     printf("\nVolte sempre!\n");
 
