@@ -6,13 +6,15 @@
 #include <windows.h>
 
 // TELA CONTROLE ESTOQUE DE INGREDIENTES
-typedef struct ingredientes{
+typedef struct ingredientes
+{
     char nome[80];
     int codigo;
     int quantidade;
 } ingredientes;
 
-typedef struct cardapio{
+typedef struct cardapio
+{
     char nome[80];
     int codigo;
     int tipo;
@@ -127,8 +129,7 @@ void pesquisarIngrediente()
             encontrou = 1;
         }
     }
-    if (!encontrou)
-        printf("Ingrediente não encontrado!\n");
+    if (!encontrou) printf("Ingrediente não encontrado!\n");
 
     fclose(pFile);
 }
@@ -291,16 +292,14 @@ void telaEstoqueIngredientes()
 // TELA CONTROLE ESTOQUE DE INGREDIENTES //
 
 // TELA CARDAPIO
-void adicionarProdutoCardapio(){
+void adicionarProdutoCardapio()
+{
     cardapio *cardap;
     ingredientes ing1;
 
     FILE *pFile;
     FILE *pFile1;
-    int n, i, codigo;
-
-    printf("Quantos produtos deseja adicionar ao cardápio?: ");
-    scanf("%i", &n);
+    int n = 1, i, codigo = 1;
 
     cardap = (cardapio *)calloc(n, sizeof(cardapio));
     pFile = fopen("cardapio.txt", "a");
@@ -310,43 +309,49 @@ void adicionarProdutoCardapio(){
     {
         cardap[i].qtdIngredientes = 0;
 
-        printf("Insira o codigo do produto: ");
+        printf("Insira o código do produto: ");
         scanf("%i", &cardap[i].codigo);
 
-        printf("Insira o tipo do produto:\n");
-        printf("\n1 - Bolo");
-        printf("\n2 - Doce");
-        printf("\n3 - Sobremesa");
-        printf("\nSelecione: ");
+        while (codigoJaExisteCardapio(cardap[i].codigo))
+        {
+            printf("Código já existe. Insira um novo código: ");
+            scanf("%i", &cardap[i].codigo);
+        }
+
+        printf("Insira o tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ");
         scanf("%i", &cardap[i].tipo);
 
         fflush(stdin);
         printf("Insira o nome do produto: ");
         scanf("%[^\n]s", cardap[i].nome);
 
-        int qtd = 0;
-
-        while (codigo != 0)
+        listarIngrediente();
+        while (1)
         {
-            listarIngrediente();
-            printf("Selecione um ingrediente (0 para finalizar): ");
-            scanf("%i", &codigo);
+            int codigoIngrediente;
 
-            if (cardap[i].qtdIngredientes < 30)
+            printf("Insira o código do ingrediente a ser adicionado (0 para finalizar): ");
+            scanf("%i", &codigoIngrediente);
+
+            if (codigoIngrediente == 0)
+                break;
+
+            int ingredienteExiste = 0;
+
+            rewind(pFile1);
+            while (fread(&ing1, sizeof(ingredientes), 1, pFile1))
             {
-                rewind(pFile1);
-                while (fread(&ing1, sizeof(ingredientes), 1, pFile1))
+                if (ing1.codigo == codigoIngrediente)
                 {
-                    if (ing1.codigo == codigo){
-                        cardap[i].listaIngredientes[cardap[i].qtdIngredientes] = ing1.codigo;
-                        cardap[i].qtdIngredientes++;
-                    }
+                    ingredienteExiste = 1;
+                    cardap[i].listaIngredientes[cardap[i].qtdIngredientes] = codigoIngrediente;
+                    cardap[i].qtdIngredientes++;
+                    printf("Ingrediente adicionado ao produto.\n");
+                    break;
                 }
             }
-            else
-            {
-                printf("Lista de ingredientes cheia. Não é possível adicionar mais ingredientes.\n");
-            }
+
+            if (!ingredienteExiste) printf("Código de ingrediente inexistente. Tente novamente.\n");
         }
 
         fwrite(&cardap[i], sizeof(cardapio), 1, pFile);
@@ -357,13 +362,38 @@ void adicionarProdutoCardapio(){
     fclose(pFile1);
 }
 
-char* getNomeIngredientePorCodigo(int codigo) {
+int codigoJaExisteCardapio(int codigo)
+{
+    FILE *file = fopen("cardapio.txt", "r");
+
+    if (file)
+    {
+        cardapio temp;
+
+        while (fread(&temp, sizeof(cardapio), 1, file))
+        {
+            if (temp.codigo == codigo)
+            {
+                fclose(file);
+                return 1;
+            }
+        }
+        fclose(file);
+    }
+
+    return 0;
+}
+
+char* getNomeIngredientePorCodigo(int codigo)
+{
     FILE *pFile = fopen("estoque_ingredientes.txt", "r");
     ingredientes ing1;
     char *nomeIngrediente = NULL;
 
-    while (fread(&ing1, sizeof(ingredientes), 1, pFile)) {
-        if (ing1.codigo == codigo) {
+    while (fread(&ing1, sizeof(ingredientes), 1, pFile))
+    {
+        if (ing1.codigo == codigo)
+        {
             nomeIngrediente = strdup(ing1.nome);
             break;
         }
@@ -374,28 +404,206 @@ char* getNomeIngredientePorCodigo(int codigo) {
     return nomeIngrediente;
 }
 
-void listarCardapio() {
+void listarCardapio()
+{
     cardapio cardap;
     FILE *pFile = fopen("cardapio.txt", "r");
 
-    while (fread(&cardap, sizeof(cardapio), 1, pFile)) {
+    while (fread(&cardap, sizeof(cardapio), 1, pFile))
+    {
         printf("\nCódigo: %i\n", cardap.codigo);
         printf("Nome: %s\n", cardap.nome);
-        printf("Tipo: %i\n", cardap.tipo);
-        printf("Quantidade de Ingredientes: %i\n", cardap.qtdIngredientes);
+        printf("Tipo: %s\n", cardap.tipo == 1 ? "Bolo" : cardap.tipo == 2 ? "Doce" : "Sobremesa");
+        printf("\nQuantidade de Ingredientes: %i\n", cardap.qtdIngredientes);
 
         printf("Ingredientes:\n");
 
-        for (int i = 0; i < cardap.qtdIngredientes; i++) {
+        for (int i = 0; i < cardap.qtdIngredientes; i++)
+        {
             int codigoIngrediente = cardap.listaIngredientes[i];
             char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
-            printf("  Nome: %s\n", nomeIngrediente);
+            printf("  Nome: (%i)%s\n", cardap.listaIngredientes[i], nomeIngrediente);
         }
-
-        printf("\n");
+        printf("------------------------------------------\n------------------------------------------");
+        printf("\n\n");
     }
 
     fclose(pFile);
+}
+
+void pesquisarProdutoCardapio()
+{
+    cardapio cardap;
+    FILE *pFile;
+    pFile = fopen("cardapio.txt", "r");
+
+    int codigo, encontrou = 0;
+    printf("Insira o codigo do produto: ");
+    scanf("%i", &codigo);
+
+    while (fread(&cardap, sizeof(cardapio), 1, pFile))
+    {
+        if (cardap.codigo == codigo)
+        {
+            printf("\nCódigo: %i\n", cardap.codigo);
+            printf("Nome: %s\n", cardap.nome);
+            printf("Tipo: %s\n", cardap.tipo == 1 ? "Bolo" : cardap.tipo == 2 ? "Doce" : "Sobremesa");
+            printf("\nQuantidade de Ingredientes: %i\n", cardap.qtdIngredientes);
+
+            printf("Ingredientes:\n");
+
+            for (int i = 0; i < cardap.qtdIngredientes; i++)
+            {
+                int codigoIngrediente = cardap.listaIngredientes[i];
+                char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
+                printf("  Nome: (%i)%s\n", cardap.listaIngredientes[i], nomeIngrediente);
+            }
+            printf("------------------------------------------\n------------------------------------------");
+            printf("\n\n");
+            encontrou=1;
+        }
+    }
+    if (!encontrou) printf("Produto não encontrado!\n");
+
+    fclose(pFile);
+}
+
+void atualizarProdutoCardapio()
+{
+    listarCardapio();
+
+    cardapio cardap;
+    FILE *pFile;
+    FILE *pFile1;
+    pFile = fopen("cardapio.txt", "r");
+    pFile1 = fopen("temp.txt", "w");
+
+    int codigo, encontrou = 0;
+    printf("Insira o código do produto a ser atualizado: ");
+    scanf("%i", &codigo);
+
+    while (fread(&cardap, sizeof(cardapio), 1, pFile))
+    {
+        if (cardap.codigo == codigo)
+        {
+            encontrou = 1;
+
+            char escolhaAtualizar;
+
+            printf("Deseja atualizar o nome do produto? (S/N): ");
+            scanf(" %c", &escolhaAtualizar);
+            escolhaAtualizar = toupper(escolhaAtualizar);
+
+            if (escolhaAtualizar == 'S')
+            {
+                fflush(stdin);
+                printf("Insira o novo nome do produto: ");
+                scanf("%[^\n]s", cardap.nome);
+            }
+
+            printf("Deseja atualizar o tipo do produto? (S/N): ");
+            scanf(" %c", &escolhaAtualizar);
+            escolhaAtualizar = toupper(escolhaAtualizar);
+
+            if (escolhaAtualizar == 'S')
+            {
+                printf("Insira o novo tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ");
+                scanf("%i", &cardap.tipo);
+            }
+
+            char escolha;
+            printf("Deseja adicionar (A) ou deletar (D) ingredientes? (0 para finalizar): ");
+            scanf(" %c", &escolha);
+            escolha = toupper(escolha);
+
+            while (escolha == 'A' || escolha == 'D')
+            {
+                if (escolha == 'A')
+                {
+                    if (cardap.qtdIngredientes < 30)
+                    {
+                        int codigoIngrediente;
+                        listarIngrediente();
+
+                        printf("Insira o código do ingrediente a ser adicionado: ");
+                        scanf("%i", &codigoIngrediente);
+
+                        int ingredienteRepetido = 0;
+                        for (int j = 0; j < cardap.qtdIngredientes; j++)
+                        {
+                            if (cardap.listaIngredientes[j] == codigoIngrediente)
+                            {
+                                printf("Este ingrediente já foi adicionado ao produto.\n");
+                                ingredienteRepetido = 1;
+                                break;
+                            }
+                        }
+
+                        if (!ingredienteRepetido)
+                        {
+                            cardap.listaIngredientes[cardap.qtdIngredientes] = codigoIngrediente;
+                            cardap.qtdIngredientes++;
+                        }
+                    }
+                    else
+                    {
+                        printf("Lista de ingredientes cheia. Não é possível adicionar mais ingredientes.\n");
+                    }
+                }
+                else if (escolha == 'D')
+                {
+                    if (cardap.qtdIngredientes > 0)
+                    {
+                        int codigoIngrediente;
+                        listarCardapio();
+
+                        printf("Insira o código do ingrediente a ser deletado: ");
+                        scanf("%i", &codigoIngrediente);
+
+                        int ingredienteValido = 0;
+                        for (int j = 0; j < cardap.qtdIngredientes; j++)
+                        {
+                            if (cardap.listaIngredientes[j] == codigoIngrediente)
+                            {
+                                for (int k = j; k < cardap.qtdIngredientes - 1; k++)
+                                {
+                                    cardap.listaIngredientes[k] = cardap.listaIngredientes[k + 1];
+                                }
+                                cardap.qtdIngredientes--;
+                                ingredienteValido = 1;
+                                printf("Ingrediente removido do produto.\n");
+                                break;
+                            }
+                        }
+                        if (!ingredienteValido) printf("Código de ingrediente inválido ou não encontrado no produto.\n");
+
+                    }
+                    else printf("O produto não possui ingredientes para deletar.\n");
+                }
+
+                printf("Deseja continuar a adicionar (A) ou deletar (D) ingredientes? (A/D/0 para finalizar): ");
+                scanf(" %c", &escolha);
+                escolha = toupper(escolha);
+            }
+        }
+        fwrite(&cardap, sizeof(cardapio), 1, pFile1);
+    }
+
+    fclose(pFile);
+    fclose(pFile1);
+
+    if (encontrou)
+    {
+        pFile1 = fopen("temp.txt", "r");
+        pFile = fopen("cardapio.txt", "w");
+
+        while (fread(&cardap, sizeof(cardapio), 1, pFile1)) fwrite(&cardap, sizeof(cardapio), 1, pFile);
+
+        fclose(pFile);
+        fclose(pFile1);
+        remove("temp.txt");
+    }
+    else printf("Produto não encontrado!\n");
 }
 
 void telaCardapio()
@@ -404,9 +612,11 @@ void telaCardapio()
 
     do
     {
-        printf("\nESTOQUE DE INGREDIENTES");
+        printf("\nCARDAPIO");
         printf("\n1 - Adicionar Produto no Cardápio");
         printf("\n2 - Listar Cardapio");
+        printf("\n3 - Pesquisar Produto");
+        printf("\n4 - Atualizar Produto");
         printf("\n0 - Sair");
 
         int read = 0;
@@ -423,14 +633,32 @@ void telaCardapio()
             }
         }
 
-        switch (escolha){
+        switch (escolha)
+        {
         case 1:
             system("cls");
-            adicionarProdutoCardapio();
+            char resposta;
+
+            do
+            {
+                adicionarProdutoCardapio();
+                printf("Deseja adicionar mais algum produto(S/N)?: ");
+                scanf(" %c", &resposta);
+            }
+            while(resposta != 'N');
+
             break;
         case 2:
             system("cls");
             listarCardapio();
+            break;
+        case 3:
+            system("cls");
+            pesquisarProdutoCardapio();
+            break;
+        case 4:
+            system("cls");
+            atualizarProdutoCardapio();
             break;
         }
     }
@@ -470,7 +698,7 @@ void barraDeLoading()
 
 int main()
 {
-    barraDeLoading();
+    //barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese_Brazil");
 
