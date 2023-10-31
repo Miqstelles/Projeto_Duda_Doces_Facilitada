@@ -20,7 +20,15 @@ typedef struct cardapio
     int tipo;
     int listaIngredientes[80];
     int qtdIngredientes;
+    float preco;
 } cardapio;
+
+typedef struct vendas
+{
+    int codigo;
+    int pedido[80];
+    float valor;
+} vendas;
 
 void adicionarIngrediente()
 {
@@ -333,8 +341,7 @@ void adicionarProdutoCardapio()
             printf("Insira o código do ingrediente a ser adicionado (0 para finalizar): ");
             scanf("%i", &codigoIngrediente);
 
-            if (codigoIngrediente == 0)
-                break;
+            if (codigoIngrediente == 0) break;
 
             int ingredienteExiste = 0;
 
@@ -353,6 +360,9 @@ void adicionarProdutoCardapio()
 
             if (!ingredienteExiste) printf("Código de ingrediente inexistente. Tente novamente.\n");
         }
+
+        printf("Insira o valor do produto: ");
+        scanf("%f", &cardap[i].preco);
 
         fwrite(&cardap[i], sizeof(cardapio), 1, pFile);
     }
@@ -424,6 +434,9 @@ void listarCardapio()
             char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
             printf("  Nome: (%i)%s\n", cardap.listaIngredientes[i], nomeIngrediente);
         }
+
+        printf("\nPreço: %.2f\n", cardap.preco);
+
         printf("------------------------------------------\n------------------------------------------");
         printf("\n\n");
     }
@@ -458,6 +471,9 @@ void pesquisarProdutoCardapio()
                 char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
                 printf("  Nome: (%i)%s\n", cardap.listaIngredientes[i], nomeIngrediente);
             }
+
+            printf("\nPreço: %.2f\n", cardap.preco);
+
             printf("------------------------------------------\n------------------------------------------");
             printf("\n\n");
             encontrou=1;
@@ -510,6 +526,17 @@ void atualizarProdutoCardapio()
                 printf("Insira o novo tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ");
                 scanf("%i", &cardap.tipo);
             }
+
+            printf("Deseja atualiza o valor do produto? (S/N): ");
+            scanf(" %c", &escolhaAtualizar);
+            escolhaAtualizar = toupper(escolhaAtualizar);
+
+            if (escolhaAtualizar == 'S')
+            {
+                printf("Insira o novo preço do produto: ");
+                scanf("%f", &cardap.preco);
+            }
+
 
             char escolha;
             printf("Deseja adicionar (A) ou deletar (D) ingredientes? (0 para finalizar): ");
@@ -606,6 +633,91 @@ void atualizarProdutoCardapio()
     else printf("Produto não encontrado!\n");
 }
 
+void deletarProdutoCardapio()
+{
+    listarCardapio();
+
+    cardapio cardap;
+    FILE *pFile;
+    FILE *pFile1;
+    pFile = fopen("cardapio.txt", "r");
+    pFile1 = fopen("temp.txt", "w");
+
+    int codigo, encontrou = 0;
+    printf("Insira o código do produto a ser deletado: ");
+    scanf("%i", &codigo);
+
+    while (fread(&cardap, sizeof(cardapio), 1, pFile))
+    {
+        if (cardap.codigo == codigo)
+        {
+            encontrou = 1;
+            printf("Produto: %s deletado com sucesso!\n", cardap.nome);
+        }
+        else fwrite(&cardap, sizeof(cardapio), 1, pFile1);
+    }
+
+    fclose(pFile);
+    fclose(pFile1);
+
+    if (encontrou)
+    {
+        pFile1 = fopen("temp.txt", "r");
+        pFile = fopen("cardapio.txt", "w");
+
+        while (fread(&cardap, sizeof(cardapio), 1, pFile1)) fwrite(&cardap, sizeof(cardapio), 1, pFile);
+
+        fclose(pFile);
+        fclose(pFile1);
+    }
+    else printf("Produto não encontrado!\n");
+}
+
+// TELA CARDAPIO //
+
+// TELA VENDAS
+
+void novoPedido(){
+
+}
+
+void telaVendas()
+{
+    int escolha;
+
+    do
+    {
+        printf("\nVENDAS");
+        printf("\n1 - Novo Pedido");
+
+        int read = 0;
+
+        while (read != 1)
+        {
+            printf("\n\nInsira uma opção: ");
+            read = scanf("%i", &escolha);
+
+            if (read != 1)
+            {
+                printf("ERRO! Digite uma opção valida");
+                scanf("%*[^\n]");
+            }
+        }
+
+        switch(escolha)
+        {
+        case 1:
+            printf("Novo pedido");
+            break;
+        }
+    }
+    while(escolha !=0);
+
+    system("cls");
+}
+
+// TELA VENDAS //
+
 void telaCardapio()
 {
     int escolha;
@@ -617,6 +729,7 @@ void telaCardapio()
         printf("\n2 - Listar Cardapio");
         printf("\n3 - Pesquisar Produto");
         printf("\n4 - Atualizar Produto");
+        printf("\n5 - Deletar Produto");
         printf("\n0 - Sair");
 
         int read = 0;
@@ -660,6 +773,10 @@ void telaCardapio()
             system("cls");
             atualizarProdutoCardapio();
             break;
+        case 5:
+            system("cls");
+            deletarProdutoCardapio();
+            break;
         }
     }
     while (escolha != 0);
@@ -680,8 +797,7 @@ void barraDeLoading()
     printf("\n\n\n\n\t\t\t\t\t Carregando...\n\n");
     printf("\t\t\t\t\t");
 
-    for (int i = 0; i < 26; i++)
-        printf("%c", a);
+    for (int i = 0; i < 26; i++) printf("%c", a);
 
     printf("\r");
     printf("\t\t\t\t\t");
@@ -700,7 +816,7 @@ int main()
 {
     //barraDeLoading();
 
-    setlocale(LC_ALL, "Portuguese_Brazil");
+    setlocale(LC_ALL, "Portuguese");
 
     int escolha;
 
@@ -734,7 +850,7 @@ int main()
             break;
         case 2:
             system("cls");
-            printf("Vendas");
+            telaVendas();
             break;
         case 3:
             system("cls");
