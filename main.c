@@ -27,31 +27,45 @@ typedef struct vendas
 {
     int codigo;
     int pedido[80];
+    int qtdProdutos;
     float valor;
+    char nomeCliente[80];
 } vendas;
+
+int obterProximoCodigo()
+{
+    FILE *pFile;
+    ingredientes ing;
+    int maiorCodigo = 0;
+
+    pFile = fopen("estoque_ingredientes.txt", "r");
+
+    if (pFile != NULL)
+    {
+        while (fread(&ing, sizeof(ingredientes), 1, pFile) == 1)
+        {
+            if (ing.codigo > maiorCodigo) maiorCodigo = ing.codigo;
+        }
+
+        fclose(pFile);
+    }
+
+    return maiorCodigo + 1;
+}
+
 
 void adicionarIngrediente()
 {
     FILE *pFile;
     ingredientes *ing;
-    int n, i;
-
-    printf("Quantos ingredientes deseja adicionar?: ");
-    scanf("%i", &n);
+    int n = 1, i;
 
     ing = (ingredientes *)calloc(n, sizeof(ingredientes));
     pFile = fopen("estoque_ingredientes.txt", "a");
 
     for (i = 0; i < n; i++)
     {
-        printf("Insira o codigo do produto: ");
-        scanf("%i", &ing[i].codigo);
-
-        while (codigoJaExiste(ing[i].codigo))
-        {
-            printf("Código já existe. Insira um novo código: ");
-            scanf("%i", &ing[i].codigo);
-        }
+        ing[i].codigo = obterProximoCodigo();
 
         fflush(stdin);
         printf("Insira o nome do ingrediente: ");
@@ -269,7 +283,17 @@ void telaEstoqueIngredientes()
         {
         case 1:
             system("cls");
-            adicionarIngrediente();
+            char resposta;
+
+            do
+            {
+                adicionarIngrediente();
+                printf("Deseja adicionar mais algum ingrediente(S/N)?: ");
+                scanf(" %c", &resposta);
+                resposta = toupper(resposta);
+            }
+            while(resposta != 'N');
+
             break;
         case 2:
             system("cls");
@@ -291,6 +315,8 @@ void telaEstoqueIngredientes()
             system("cls");
             deletarIngrediente();
             break;
+        default:
+            system("cls");
         }
     }
     while (escolha != 0);
@@ -300,6 +326,28 @@ void telaEstoqueIngredientes()
 // TELA CONTROLE ESTOQUE DE INGREDIENTES //
 
 // TELA CARDAPIO
+int obterProximoCodigoCardapio()
+{
+    FILE *pFile;
+    cardapio cardap;
+    int maiorCodigo = 0;
+
+    pFile = fopen("cardapio.txt", "r");
+
+    if (pFile != NULL)
+    {
+        while (fread(&cardap, sizeof(cardapio), 1, pFile) == 1)
+        {
+            if (cardap.codigo > maiorCodigo) maiorCodigo = cardap.codigo;
+        }
+
+        fclose(pFile);
+    }
+
+    return maiorCodigo + 1;
+}
+
+
 void adicionarProdutoCardapio()
 {
     cardapio *cardap;
@@ -317,14 +365,7 @@ void adicionarProdutoCardapio()
     {
         cardap[i].qtdIngredientes = 0;
 
-        printf("Insira o código do produto: ");
-        scanf("%i", &cardap[i].codigo);
-
-        while (codigoJaExisteCardapio(cardap[i].codigo))
-        {
-            printf("Código já existe. Insira um novo código: ");
-            scanf("%i", &cardap[i].codigo);
-        }
+        cardap[i].codigo = obterProximoCodigoCardapio();
 
         printf("Insira o tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ");
         scanf("%i", &cardap[i].tipo);
@@ -673,51 +714,6 @@ void deletarProdutoCardapio()
     else printf("Produto não encontrado!\n");
 }
 
-// TELA CARDAPIO //
-
-// TELA VENDAS
-
-void novoPedido(){
-
-}
-
-void telaVendas()
-{
-    int escolha;
-
-    do
-    {
-        printf("\nVENDAS");
-        printf("\n1 - Novo Pedido");
-
-        int read = 0;
-
-        while (read != 1)
-        {
-            printf("\n\nInsira uma opção: ");
-            read = scanf("%i", &escolha);
-
-            if (read != 1)
-            {
-                printf("ERRO! Digite uma opção valida");
-                scanf("%*[^\n]");
-            }
-        }
-
-        switch(escolha)
-        {
-        case 1:
-            printf("Novo pedido");
-            break;
-        }
-    }
-    while(escolha !=0);
-
-    system("cls");
-}
-
-// TELA VENDAS //
-
 void telaCardapio()
 {
     int escolha;
@@ -757,6 +753,7 @@ void telaCardapio()
                 adicionarProdutoCardapio();
                 printf("Deseja adicionar mais algum produto(S/N)?: ");
                 scanf(" %c", &resposta);
+                resposta = toupper(resposta);
             }
             while(resposta != 'N');
 
@@ -777,6 +774,8 @@ void telaCardapio()
             system("cls");
             deletarProdutoCardapio();
             break;
+        default:
+            system("cls");
         }
     }
     while (escolha != 0);
@@ -785,6 +784,296 @@ void telaCardapio()
 }
 
 // TELA CARDAPIO //
+
+// TELA CARDAPIO //
+
+// TELA VENDAS
+
+int obterProximoCodigoVenda()
+{
+    FILE *pFile;
+    vendas vnd;
+    int maiorCodigo = 0;
+
+    pFile = fopen("vendas.txt", "r");
+
+    if (pFile != NULL)
+    {
+        while (fread(&vnd, sizeof(vendas), 1, pFile) == 1)
+        {
+            if (vnd.codigo > maiorCodigo) maiorCodigo = vnd.codigo;
+        }
+
+        fclose(pFile);
+    }
+
+    return maiorCodigo + 1;
+}
+
+void novoPedido()
+{
+    FILE *pFile;
+    FILE *pFile1;
+
+    vendas *vnd;
+    cardapio cardap;
+
+    int n = 1, i;
+
+    vnd = (vendas *)calloc(n, sizeof(vendas));
+    pFile = fopen("vendas.txt", "a");
+    pFile1 = fopen("cardapio.txt", "r");
+
+    for (i = 0; i < n; i++)
+    {
+        vnd[i].codigo = obterProximoCodigoVenda();
+
+        fflush(stdin);
+        printf("Insira o nome do cliente: ");
+        scanf("%[^\n]s", vnd[i].nomeCliente);
+
+        vnd[i].qtdProdutos = 0;
+
+        listarCardapio();
+        while (1)
+        {
+            int codigoProduto;
+
+            printf("Insira o código do produto a ser adicionado (0 para finalizar): ");
+            scanf("%i", &codigoProduto);
+
+            if (codigoProduto == 0) break;
+
+            int produtoExiste = 0;
+
+            rewind(pFile1);
+            while (fread(&cardap, sizeof(cardapio), 1, pFile1))
+            {
+                if (cardap.codigo == codigoProduto)
+                {
+                    produtoExiste = 1;
+                    vnd[i].pedido[vnd[i].qtdProdutos] = codigoProduto;
+                    vnd[i].qtdProdutos++;
+                    printf("Produto adicionado ao produto.\n");
+                    break;
+                }
+            }
+
+            if (!produtoExiste) printf("Código de produto inexistente. Tente novamente.\n");
+        }
+
+        fwrite(&vnd[i], sizeof(vendas), 1, pFile);
+    }
+    fclose(pFile);
+}
+
+cardapio getProdutoPorCodigo(int codigo)
+{
+    FILE *pFile = fopen("cardapio.txt", "r");
+    cardapio cardap;
+    cardapio produtoEncontrado;
+
+    while (fread(&cardap, sizeof(cardapio), 1, pFile))
+    {
+        if (cardap.codigo == codigo)
+        {
+            produtoEncontrado = cardap;
+            break;
+        }
+    }
+
+    fclose(pFile);
+
+    return produtoEncontrado;
+}
+
+void listarVendas()
+{
+    vendas vnd;
+
+    int escolha;
+
+    do
+    {
+
+        FILE *pFile = fopen("vendas.txt", "r");
+
+        while (fread(&vnd, sizeof(vendas), 1, pFile))
+        {
+            printf("\nCódigo: %i\n", vnd.codigo);
+            printf("Cliente: %s\n", vnd.nomeCliente);
+
+            printf("Produtos:\n");
+
+            float valorPedido = 0;
+
+            for (int i = 0; i < vnd.qtdProdutos; i++)
+            {
+                int codigoProduto = vnd.pedido[i];
+                cardapio produto = getProdutoPorCodigo(codigoProduto);
+
+                valorPedido += produto.preco;
+                printf("  Nome: %s\n", produto.nome);
+            }
+
+            printf("\nPreço Total do Pedido: %.2f\n", valorPedido);
+
+            printf("------------------------------------------\n------------------------------------------");
+            printf("\n\n");
+        }
+
+        printf("\n1 - Detalhar pedido: ");
+        printf("\n0 - Sair");
+
+        int read = 0;
+
+        while (read != 1)
+        {
+            printf("\n\nInsira uma opção: ");
+            read = scanf("%i", &escolha);
+
+            if (read != 1)
+            {
+                printf("ERRO! Digite uma opção valida");
+                scanf("%*[^\n]");
+            }
+        }
+
+        if(escolha == 1){
+            int escolhaPedido;
+            do{
+                pesquisarPedido();
+                printf("\n0 - Voltar: ");
+                scanf("%i", &escolhaPedido);
+            }while(escolhaPedido != 0);
+            system("cls");
+        }
+
+        fclose(pFile);
+
+    } while(escolha !=0);
+
+    system("cls");
+
+}
+
+void pesquisarPedido()
+{
+    vendas vnd;
+    FILE *pFile;
+    pFile = fopen("vendas.txt", "r");
+
+    int codigo, encontrou = 0;
+    printf("Insira o codigo do pedido: ");
+    scanf("%i", &codigo);
+
+    while (fread(&vnd, sizeof(vendas), 1, pFile))
+    {
+        if (vnd.codigo == codigo)
+        {
+            system("cls");
+            printf("\nCódigo do Pedido: %i\n", vnd.codigo);
+            printf("Cliente: %s\n\n", vnd.nomeCliente);
+
+            printf("Produtos:\n");
+
+            float valorPedido = 0;
+
+            for (int i = 0; i < vnd.qtdProdutos; i++)
+            {
+                int codigoProduto = vnd.pedido[i];
+                cardapio produto = getProdutoPorCodigo(codigoProduto);
+
+                valorPedido += produto.preco;
+
+                printf("  Nome: %s\n", produto.nome);
+                printf("  Tipo: %s\n", (produto.tipo == 1) ? "Bolo" : (produto.tipo == 2) ? "Doce" : "Sobremesa");
+                printf("  Preço: %.2f\n\n", produto.preco);
+
+                printf("  Ingredientes:\n");
+                for (int j = 0; j < produto.qtdIngredientes; j++)
+                {
+                    int codigoIngrediente = produto.listaIngredientes[j];
+                    char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
+                    printf("    %s\n", nomeIngrediente);
+                }
+                printf("\n  -------------------\n");
+                printf("\n");
+            }
+
+            printf("Preço Total do Pedido: %.2f\n", valorPedido);
+
+            printf("------------------------------------------");
+            printf("\n\n");
+
+            encontrou = 1;
+        }
+    }
+    if (!encontrou) printf("Pedido não encontrado!\n");
+
+    fclose(pFile);
+}
+
+void telaVendas()
+{
+    int escolha;
+
+    do
+    {
+        printf("\nVENDAS");
+        printf("\n1 - Novo Pedido");
+        printf("\n2 - Listar Pedidos");
+        printf("\n3 - Pesquisar Pedido");
+        printf("\n0 - Sair");
+
+        int read = 0;
+
+        while (read != 1)
+        {
+            printf("\n\nInsira uma opção: ");
+            read = scanf("%i", &escolha);
+
+            if (read != 1)
+            {
+                printf("ERRO! Digite uma opção valida");
+                scanf("%*[^\n]");
+            }
+        }
+
+        switch(escolha)
+        {
+        case 1:
+            system("cls");
+            char resposta;
+
+            do
+            {
+                novoPedido();
+                printf("Deseja adicionar mais algum pedido(S/N)?: ");
+                scanf(" %c", &resposta);
+                resposta = toupper(resposta);
+            }
+            while(resposta != 'N');
+
+            break;
+        case 2:
+            system("cls");
+            listarVendas();
+            break;
+        case 3:
+            system("cls");
+            pesquisarPedido();
+            break;
+        default:
+            system("cls");
+        }
+    }
+    while(escolha !=0);
+
+    system("cls");
+}
+
+// TELA VENDAS //
 
 void barraDeLoading()
 {
@@ -814,7 +1103,7 @@ void barraDeLoading()
 
 int main()
 {
-    //barraDeLoading();
+    barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese");
 
@@ -822,9 +1111,9 @@ int main()
 
     do
     {
-        printf("\nBem Vindo");
-        printf("\n1 - Cardapio");
-        printf("\n2 - Vendas");
+        printf("\nBem Vindo\n");
+        printf("\n1 - Vendas");
+        printf("\n2 - Cardapio");
         printf("\n3 - Estoque de Ingredientes");
         printf("\n0 - Sair");
 
@@ -846,16 +1135,18 @@ int main()
         {
         case 1:
             system("cls");
-            telaCardapio();
+            telaVendas();
             break;
         case 2:
             system("cls");
-            telaVendas();
+            telaCardapio();
             break;
         case 3:
             system("cls");
             telaEstoqueIngredientes();
             break;
+        default:
+            system("cls");
         }
     }
     while (escolha != 0);
