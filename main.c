@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <windows.h>
 
-// TELA VENDAS //
-
 void barraDeLoading()
 {
     system("color 0A");
@@ -18,7 +16,8 @@ void barraDeLoading()
     printf("\n\n\n\n\t\t\t\t\t Carregando...\n\n");
     printf("\t\t\t\t\t");
 
-    for (int i = 0; i < 26; i++) printf("%c", a);
+    for (int i = 0; i < 26; i++)
+        printf("%c", a);
 
     printf("\r");
     printf("\t\t\t\t\t");
@@ -54,12 +53,12 @@ int main()
 
         while (read != 1)
         {
-            printf("\n\nInsira uma opção: ");
+            printf("\n\nInsira uma opï¿½ï¿½o: ");
             read = scanf("%i", &escolha);
 
             if (read != 1)
             {
-                printf("ERRO! Digite uma opção valida");
+                printf("ERRO! Digite uma opï¿½ï¿½o valida");
                 scanf("%*[^\n]");
             }
         }
@@ -81,8 +80,7 @@ int main()
         default:
             system("cls");
         }
-    }
-    while (escolha != 0);
+    } while (escolha != 0);
 
     printf("\nVolte sempre!\n");
 
