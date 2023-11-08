@@ -19,6 +19,5 @@ int obterProximoCodigo()
 
         fclose(pFile);
     }
-
     return maiorCodigo + 1;
 }

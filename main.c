@@ -5,8 +5,7 @@
 #include <stdlib.h>
 #include <windows.h>
 
-void barraDeLoading()
-{
+void barraDeLoading(){
     system("color 0A");
 
     char a = 177, b = 219;
@@ -32,8 +31,7 @@ void barraDeLoading()
     system("cls");
 }
 
-int main()
-{
+int main(){
     barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese");
