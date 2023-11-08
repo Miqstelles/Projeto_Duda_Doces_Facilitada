@@ -31,8 +31,89 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="adicionarIngrediente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="adicionarProdutoCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="atualizarIngrediente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="atualizarProdutoCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cardapio.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="codigoJaExiste.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codigoJaExisteCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="deletarIngrediente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="deletarProdutoCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="getNomeIngredientePorCodigo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="getProdutoPorCodigo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ingredientes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="ingredientes.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="listarCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="listarIngrediente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="listarVendas.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="novoPedido.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="obterProximoCodigo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="obterProximoCodigoCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="obterProximoCodigoVenda.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pesquisarIngrediente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pesquisarPedido.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pesquisarProdutoCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="qtdIngredientes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vendas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="vendas.h">
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />
