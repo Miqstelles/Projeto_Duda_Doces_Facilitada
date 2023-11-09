@@ -32,7 +32,7 @@ void barraDeLoading(){
 }
 
 int main(){
-    //barraDeLoading();
+    barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese");
     system("chcp 1252 > nul");
@@ -49,36 +49,26 @@ int main(){
 
         int read = 0;
 
-        while (read != 1)
-        {
-            printf("\nInsira uma opção: ");
-            read = scanf("%i", &escolha);
-
-            if (read != 1)
-            {
-                printf("ERRO! Digite uma opção valida");
-                scanf("%*[^\n]");
-            }
-        }
+        escolha = verificacao();
 
         switch (escolha)
         {
-        case 1:
+        case '1':
             system("cls");
             telaVendas();
             break;
-        case 2:
+        case '2':
             system("cls");
             telaCardapio();
             break;
-        case 3:
+        case '3':
             system("cls");
             telaEstoqueIngredientes();
             break;
         default:
             system("cls");
         }
-    } while (escolha != 0);
+    } while (escolha != '0');
 
     printf("\nVolte sempre!\n");
 

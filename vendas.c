@@ -15,23 +15,11 @@ void telaVendas()
         printf("\n3 - Pesquisar Pedido");
         printf("\n0 - Sair");
 
-        int read = 0;
-
-        while (read != 1)
-        {
-            printf("\n\nInsira uma opção: ");
-            read = scanf("%i", &escolha);
-
-            if (read != 1)
-            {
-                printf("ERRO! Digite uma opção valida");
-                scanf("%*[^\n]");
-            }
-        }
+        escolha = verificacao();
 
         switch(escolha)
         {
-        case 1:
+        case '1':
             system("cls");
             char resposta;
 
@@ -45,11 +33,11 @@ void telaVendas()
             while(resposta != 'N');
 
             break;
-        case 2:
+        case '2':
             system("cls");
             listarVendas();
             break;
-        case 3:
+        case '3':
             system("cls");
             pesquisarPedido();
             break;
@@ -57,7 +45,7 @@ void telaVendas()
             system("cls");
         }
     }
-    while(escolha !=0);
+    while(escolha != '0');
 
     system("cls");
 }

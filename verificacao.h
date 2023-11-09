@@ -1,0 +1,6 @@
+#ifndef VERIFICACAO_H_INCLUDED
+#define VERIFICACAO_H_INCLUDED
+
+char verificacao();
+
+#endif // VERIFICACAO_H_INCLUDED

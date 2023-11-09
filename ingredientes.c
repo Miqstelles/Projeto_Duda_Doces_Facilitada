@@ -17,23 +17,11 @@ void telaEstoqueIngredientes()
         printf("\n6 - Deletar Ingrediente");
         printf("\n0 - Sair");
 
-        int read = 0;
-
-        while (read != 1)
-        {
-            printf("\n\nInsira uma opção: ");
-            read = scanf("%i", &escolha);
-
-            if (read != 1)
-            {
-                printf("ERRO! Digite uma opção valida");
-                scanf("%*[^\n]");
-            }
-        }
+        escolha = verificacao();
 
         switch (escolha)
         {
-        case 1:
+        case '1':
             system("cls");
             char resposta;
 
@@ -48,31 +36,32 @@ void telaEstoqueIngredientes()
             while(resposta != 'N');
 
             break;
-        case 2:
+        case '2':
             system("cls");
             listarIngrediente();
             break;
-        case 3:
+        case '3':
             system("cls");
             qtdIngredientes();
             break;
-        case 4:
+        case '4':
             system("cls");
             pesquisarIngrediente();
             break;
-        case 5:
+        case '5':
             system("cls");
             atualizarIngrediente();
             break;
-        case 6:
+        case '6':
             system("cls");
             deletarIngrediente();
             break;
         default:
             system("cls");
+            break;
         }
     }
-    while (escolha != 0);
+    while (escolha != '0');
 
     system("cls");
 }
