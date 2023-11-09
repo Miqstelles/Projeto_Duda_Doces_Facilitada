@@ -5,19 +5,21 @@
 
 void pesquisarPedido()
 {
-    vendas vnd;
-    FILE *pFile;
-    pFile = fopen("vendas.txt", "r");
+    vendas vnd; // Declara a estrutura chamada vendas.
+    FILE *pFile; // Declara um ponteiro de arquivo.
+
+    pFile = fopen("vendas.txt", "r"); // Abre o arquivo de vendas para leitura.
 
     int codigo, encontrou = 0;
-    printf("Insira o codigo do pedido: ");
-    scanf("%i", &codigo);
+    printf("Insira o código do pedido: ");
+    scanf("%i", &codigo); // Solicita o código do pedido a ser pesquisado.
 
     while (fread(&vnd, sizeof(vendas), 1, pFile))
     {
         if (vnd.codigo == codigo)
         {
-            system("cls");
+            system("cls"); // Limpa a tela (usando "cls" no Windows).
+
             printf("\nCódigo do Pedido: %i\n", vnd.codigo);
             printf("Cliente: %s\n\n", vnd.nomeCliente);
 
@@ -55,9 +57,7 @@ void pesquisarPedido()
             encontrou = 1;
         }
     }
-    if (!encontrou) printf("Pedido não encontrado!\n");
+    if (!encontrou) printf("Pedido não encontrado!\n"); // Exibe uma mensagem se o pedido não for encontrado.
 
-    fclose(pFile);
+    fclose(pFile); // Fecha o arquivo de vendas.
 }
-
-

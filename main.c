@@ -32,7 +32,7 @@ void barraDeLoading(){
 }
 
 int main(){
-    barraDeLoading();
+    //barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese");
     system("chcp 1252 > nul");
@@ -51,12 +51,12 @@ int main(){
 
         while (read != 1)
         {
-            printf("\n\nInsira uma opï¿½ï¿½o: ");
+            printf("\nInsira uma opção: ");
             read = scanf("%i", &escolha);
 
             if (read != 1)
             {
-                printf("ERRO! Digite uma opï¿½ï¿½o valida");
+                printf("ERRO! Digite uma opção valida");
                 scanf("%*[^\n]");
             }
         }

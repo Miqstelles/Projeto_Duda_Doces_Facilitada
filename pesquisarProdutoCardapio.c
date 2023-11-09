@@ -4,15 +4,15 @@
 #include "cardapio.h"
 #include "ingredientes.h"
 
-void pesquisarProdutoCardapio()
-{
-    cardapio cardap;
-    FILE *pFile;
-    pFile = fopen("cardapio.txt", "r");
+void pesquisarProdutoCardapio(){
+    cardapio cardap; // Declara a estrutura chamada cardapio.
+    FILE *pFile; // Declara um ponteiro de arquivo.
+
+    pFile = fopen("cardapio.txt", "r"); // Abre o arquivo de cardápio para leitura.
 
     int codigo, encontrou = 0;
-    printf("Insira o codigo do produto: ");
-    scanf("%i", &codigo);
+    printf("Insira o código do produto: ");
+    scanf("%i", &codigo); // Solicita o código do produto a ser pesquisado.
 
     while (fread(&cardap, sizeof(cardapio), 1, pFile))
     {
@@ -36,10 +36,10 @@ void pesquisarProdutoCardapio()
 
             printf("------------------------------------------\n------------------------------------------");
             printf("\n\n");
-            encontrou=1;
+            encontrou = 1;
         }
     }
-    if (!encontrou) printf("Produto não encontrado!\n");
+    if (!encontrou) printf("Produto não encontrado!\n"); // Exibe uma mensagem se o produto não for encontrado.
 
-    fclose(pFile);
+    fclose(pFile); // Fecha o arquivo de cardápio.
 }
