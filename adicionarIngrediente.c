@@ -2,17 +2,18 @@
 #include <stdlib.h>
 #include "ingredientes.h"
 
-void adicionarIngrediente(){
-    FILE *pFile; // Declara um ponteiro para o arquivo chamado pFile.
+void adicionarIngrediente()
+{
+    FILE *pFile;       // Declara um ponteiro para o arquivo chamado pFile.
     ingredientes *ing; // Declara um ponteiro para a estrutura chamada ingredientes.
 
-    ing = (ingredientes *)calloc(1, sizeof(ingredientes)); // Aloca memória para a estrutura ingredientes.
+    ing = (ingredientes *)calloc(1, sizeof(ingredientes)); // Aloca memoria para a estrutura ingredientes.
 
-    pFile = fopen("estoque_ingredientes.txt", "a"); // Abre o arquivo "estoque_ingredientes.txt" em modo de apêndice(append).
+    pFile = fopen("estoque_ingredientes.txt", "a"); // Abre o arquivo "estoque_ingredientes.txt" em modo de apï¿½ndice(append).
 
-    ing[0].codigo = obterProximoCodigo(); // Atribui o próximo código disponível ao campo "codigo" da estrutura ingredientes.
+    ing[0].codigo = obterProximoCodigo(); // Atribui o proximo cÃ³digo disponivel ao campo "codigo" da estrutura ingredientes.
 
-    fflush(stdin); // Limpa o buffer de entrada padrão (stdin).
+    fflush(stdin); // Limpa o buffer de entrada padrÃ£o (stdin).
 
     printf("Insira o nome do ingrediente: ");
     scanf("%[^\n]s", ing[0].nome);
@@ -22,6 +23,5 @@ void adicionarIngrediente(){
 
     fwrite(&ing[0], sizeof(ingredientes), 1, pFile); // Escreve os dados da estrutura ingredientes no arquivo.
 
-    fclose(pFile);  // fecha o arquivo "estoque_ingredientes.txt".
+    fclose(pFile); // fecha o arquivo "estoque_ingredientes.txt".
 }
-
