@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <ctype.h>
-
+#include "cores.h"
 char verificacao(){
 
     char escolha;
@@ -10,21 +10,21 @@ char verificacao(){
 
     do{
 
-        printf("\nDigite sua escolha: ");
+        printf(GREEN "\n\n\tDigite sua escolha: " RESET) ;
         fflush(stdin);
 
         escolha=getch();
 
         if(isdigit(escolha)!= 0){
             if(escolha != '0' && escolha != '1' && escolha != '2' && escolha != '3' && escolha != '4' && escolha != '5' && escolha != '6'){
-                printf("\nOpção invalida !!!\n");
+                printf(RED "\n\tOpção invalida !!!\n" RESET);
                 Sleep(500);
                 continue;
             }
             return escolha;
         }else{
 
-            printf("\nOpção invalida !!!\n");
+            printf(RED "\n\tOpção invalida !!!\n" RESET);
             Sleep(500);
             continue;
         }

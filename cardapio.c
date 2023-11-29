@@ -3,6 +3,7 @@
 #include "vendas.h"
 #include "cardapio.h"
 #include "ingredientes.h"
+#include "cores.h"
 
 void telaCardapio()
 {
@@ -10,13 +11,20 @@ void telaCardapio()
 
     do
     {
-        printf("\nCARDAPIO");
-        printf("\n1 - Adicionar Produto no Cardápio");
-        printf("\n2 - Listar Cardapio");
-        printf("\n3 - Pesquisar Produto");
-        printf("\n4 - Atualizar Produto");
-        printf("\n5 - Deletar Produto");
-        printf("\n0 - Sair");
+        printf(YELLOW "\n\t-------------------------------------------\n\t|\t\t\t\t\t  |");
+        printf("\n\t|\t   *------------*\t\t  |"  );
+        printf("\n\t|\t   |  CARDAPIO  |    \t\t  |\n");
+        printf("\t|");
+        printf("\t   *------------*\t\t  |\n\t|\t\t\t\t\t  |" RESET);
+
+        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Adicionar Produto no Cardápio"  YELLOW " |");
+        printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Listar Cardapio" YELLOW "\t\t  |");
+        printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Pesquisar Produto" YELLOW "\t\t  |");
+        printf(YELLOW "\n\t|" RESET RED "\t4 - " RESET "Atualizar Produto" YELLOW "\t\t  |");
+        printf(YELLOW "\n\t|" RESET RED "\t5 - " RESET "Deletar Produto" YELLOW "\t\t  |");
+        printf(YELLOW "\n\t|" RESET RED "\t0 - " RESET "Sair" YELLOW "\t\t\t  |\n");
+        printf(YELLOW "\t| \t\t\t\t\t  |");
+        printf("\n\t-------------------------------------------\n" RESET);
 
         escolha = verificacao();
 
@@ -32,9 +40,9 @@ void telaCardapio()
                 printf("Deseja adicionar mais algum produto(S/N)?: ");
                 scanf(" %c", &resposta);
                 resposta = toupper(resposta);
-            }
-            while(resposta != 'N');
+            }while(resposta != 'N');
 
+            system("cls");
             break;
         case '2':
             system("cls");

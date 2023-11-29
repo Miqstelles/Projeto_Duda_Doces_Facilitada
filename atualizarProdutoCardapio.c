@@ -6,7 +6,7 @@
 
 void atualizarProdutoCardapio()
 {
-    listarCardapio(); // Chama a função listarCardapio para mostrar os produtos no cardápio.
+    listarCardapioPedido(); // Chama a função listarCardapio para mostrar os produtos no cardápio.
 
     cardapio cardap; // Declara uma estrutura chamada cardapio.
     FILE *pFile; // Declara um ponteiro de arquivo para "cardapio.txt".
@@ -83,7 +83,7 @@ void atualizarProdutoCardapio()
                     if (cardap.qtdIngredientes < 30)
                     {
                         int codigoIngrediente;
-                        listarIngrediente(); // Chama a função listarIngrediente para mostrar os ingredientes disponíveis.
+                        listarIngredienteCardapio(); // Chama a função listarIngrediente para mostrar os ingredientes disponíveis.
 
                         printf("Insira o código do ingrediente a ser adicionado: ");
                         scanf("%i", &codigoIngrediente);
@@ -110,10 +110,30 @@ void atualizarProdutoCardapio()
                 }
                 else if (escolha == 'D')
                 {
+                    system("cls");
                     if (cardap.qtdIngredientes > 0)
                     {
                         int codigoIngrediente;
-                        listarCardapio(); // Chama a função listarCardapio para mostrar os ingredientes no produto.
+                        cardapio produto = getProdutoPorCodigo(codigo); // Chama a função listarCardapio para mostrar os ingredientes no produto.
+
+                        printf("\nCódigo: %i\n", produto.codigo);
+                        printf("Nome: %s\n", produto.nome);
+                        printf("Tipo: %s\n", produto.tipo == 1 ? "Bolo" : produto.tipo == 2 ? "Doce" : "Sobremesa");
+                        printf("\nQuantidade de Ingredientes: %i\n", produto.qtdIngredientes);
+
+                        printf("Ingredientes:\n");
+
+                        for (int i = 0; i < produto.qtdIngredientes; i++)
+                        {
+                            int codigoIngrediente = produto.listaIngredientes[i];
+                            char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
+                            printf("  Nome: (%i)%s\n", produto.listaIngredientes[i], nomeIngrediente);
+                        }
+
+                        printf("\nPreço: %.2f\n", produto.preco);
+
+                        printf("------------------------------------------\n------------------------------------------");
+                        printf("\n\n");
 
                         printf("Insira o código do ingrediente a ser deletado: ");
                         scanf("%i", &codigoIngrediente);
@@ -141,6 +161,7 @@ void atualizarProdutoCardapio()
                 scanf(" %c", &escolha);
                 escolha = toupper(escolha);
             }
+            system("cls");
         }
         fwrite(&cardap, sizeof(cardapio), 1, pFile1); // Escreve os dados atualizados do produto no arquivo "temp.txt".
     }

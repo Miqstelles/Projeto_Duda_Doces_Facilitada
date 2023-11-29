@@ -3,9 +3,11 @@
 #include "vendas.h"
 #include "cardapio.h"
 #include "ingredientes.h"
+#include "windows.h"
+#include "cores.h"
 
-void adicionarProdutoCardapio()
-{
+void adicionarProdutoCardapio(){
+    system("cls");
     cardapio *cardap; // Declara um ponteiro para a estrutura chamada cardapio.
     ingredientes ing1; // Declara a estrutura chamada ingredientes.
 
@@ -28,7 +30,7 @@ void adicionarProdutoCardapio()
     printf("Insira o nome do produto: ");
     scanf("%[^\n]s", cardap[0].nome); // Lê o nome do produto.
 
-    listarIngrediente(); // Chama a função listarIngrediente para mostrar os ingredientes disponíveis.
+    listarIngredienteCardapio(); // Chama a função listarIngrediente para mostrar os ingredientes disponíveis.
 
     while (1)
     {
@@ -48,12 +50,13 @@ void adicionarProdutoCardapio()
                 ingredienteExiste = 1; // Define a flag para indicar que o ingrediente foi encontrado.
                 cardap[0].listaIngredientes[cardap[0].qtdIngredientes] = codigoIngrediente; // Adiciona o código do ingrediente à lista de ingredientes do produto.
                 cardap[0].qtdIngredientes++; // Incrementa a quantidade de ingredientes no produto.
-                printf("Ingrediente adicionado ao produto.\n");
+                printf(GREEN "Ingrediente adicionado ao produto.\n" RESET);
+
                 break; // Sai do loop, uma vez que o ingrediente foi encontrado e adicionado.
             }
         }
 
-        if (!ingredienteExiste) printf("Código de ingrediente inexistente. Tente novamente.\n");
+        if (!ingredienteExiste) printf(RED "Código de ingrediente inexistente. Tente novamente.\n" RESET);
     }
 
     printf("Insira o valor do produto: ");

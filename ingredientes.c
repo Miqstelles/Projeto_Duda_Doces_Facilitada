@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ingredientes.h"
+#include "cores.h"
 
 void telaEstoqueIngredientes()
 {
@@ -8,14 +9,21 @@ void telaEstoqueIngredientes()
 
     do
     {
-        printf("\nESTOQUE DE INGREDIENTES");
-        printf("\n1 - Adicionar Ingredientes");
-        printf("\n2 - Listar Ingredientes");
-        printf("\n3 - Total de Ingredientes");
-        printf("\n4 - Pesquisar Ingrediente");
-        printf("\n5 - Atualizar Ingrediente");
-        printf("\n6 - Deletar Ingrediente");
-        printf("\n0 - Sair");
+        printf(YELLOW "\n\t-----------------------------------------\n\t|\t\t\t\t\t|");
+        printf("\n\t|\t   *-------------------*\t|"  );
+        printf("\n\t|\t   |    INGREDIENTES   |    \t|\n");
+        printf("\t|");
+        printf("\t   *-------------------*\t|\n\t|\t\t\t\t\t|" RESET);
+
+        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Adicionar Ingredientes"  YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Listar Ingredientes" YELLOW "\t\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Total de Ingredientes" YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t4 - " RESET "Pesquisar Ingredientes" YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t5 - " RESET "Atualizar Ingredientes" YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t6 - " RESET "Deletar Ingredientes" YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t0 - " RESET "Sair" YELLOW "\t\t\t|\n");
+        printf(YELLOW "\t| \t\t\t\t\t|");
+        printf("\n\t-----------------------------------------\n" RESET);
 
         escolha = verificacao();
 

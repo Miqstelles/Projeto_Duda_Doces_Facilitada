@@ -12,6 +12,7 @@ int obterProximoCodigo();
 void adicionarIngrediente();
 int codigoJaExiste(int codigo);
 void listarIngrediente();
+void listarIngredienteCardapio();
 void qtdIngredientes();
 void pesquisarIngrediente();
 void atualizarIngrediente();

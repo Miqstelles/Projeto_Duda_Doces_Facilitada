@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <windows.h>
+#include "cores.h"
 
 void barraDeLoading()
 {
@@ -32,8 +33,7 @@ void barraDeLoading()
     system("cls");
 }
 
-int main()
-{
+int main(){
     barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese");
@@ -42,14 +42,19 @@ int main()
     int escolha;
 
     do
-    {
-        printf("\nBem Vindo\n");
-        printf("\n1 - Vendas");
-        printf("\n2 - Cardapio");
-        printf("\n3 - Estoque de Ingredientes");
-        printf("\n0 - Sair");
+    {   printf(YELLOW "\n\t-----------------------------------------\n\t|\t\t\t\t\t|");
+        printf("\n\t|\t   *-----------*\t\t|"  );
+        printf("\n\t|\t   | Bem Vindo | \t\t|\n");
+        printf("\t|");
+        printf("\t   *-----------*\t\t|\n\t|\t\t\t\t\t|" RESET);
 
-        int read = 0;
+        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Vendas\t\t "  YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Cardapio" YELLOW "\t\t\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Estoque de Ingredientes" YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t4 - " RESET "Clientes" YELLOW "\t\t\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t0 - " RESET "Sair" YELLOW "\t\t\t|\n");
+        printf(YELLOW "\t| \t\t\t\t\t|");
+        printf("\n\t-----------------------------------------\n" RESET);
 
         escolha = verificacao();
 
@@ -66,6 +71,10 @@ int main()
         case '3':
             system("cls");
             telaEstoqueIngredientes();
+            break;
+        case '4':
+            system("cls");
+            telaClientes();
             break;
         default:
             system("cls");

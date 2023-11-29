@@ -16,6 +16,7 @@ void adicionarProdutoCardapio();
 int codigoJaExisteCardapio(int codigo);
 char* getNomeIngredientePorCodigo(int codigo);
 void listarCardapio();
+void listarCardapioPedido();
 void pesquisarProdutoCardapio();
 void atualizarProdutoCardapio();
 void deletarProdutoCardapio();

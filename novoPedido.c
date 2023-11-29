@@ -2,60 +2,87 @@
 #include <stdlib.h>
 #include "vendas.h"
 #include "cardapio.h"
+#include "clientes.h"
 
 void novoPedido()
 {
     FILE *pFile; // Declara um ponteiro de arquivo para o arquivo de vendas.
-    FILE *pFile1; // Declara um ponteiro de arquivo para o arquivo de produtos.
+    FILE *pFile1;   // Declara um ponteiro de arquivo para o arquivo de produtos.
+    FILE *pFile2;  // Declara um ponteiro de arquivo para o arquivo de clientes.
+
     vendas *vnd; // Declara um ponteiro para a estrutura chamada vendas.
-    cardapio cardap; // Declara a estrutura chamada cardapio.
+    cardapio cardap;
+    cliente clnt;
 
-    int n = 1, i;
-
-    vnd = (vendas *)calloc(n, sizeof(vendas)); // Aloca memória para a estrutura vendas.
+    vnd = (vendas *)calloc(1, sizeof(vendas)); // Aloca memória para a estrutura vendas.
     pFile = fopen("vendas.txt", "a"); // Abre o arquivo "vendas.txt" em modo de apêndice.
     pFile1 = fopen("cardapio.txt", "r"); // Abre o arquivo "cardapio.txt" para leitura.
+    pFile2 = fopen("clientes.txt", "r+"); // Abre o arquivo "cardapio.txt" para leitura.
 
-    for (i = 0; i < n; i++)
+    vnd[0].codigo = obterProximoCodigoVenda(); // Obtém o próximo código para a venda.
+
+    int codigo;
+    listarClientesPedido();
+
+
+    printf("Insira o codigo do cliente que esta realizando o pedido: ");
+    scanf("%d", &codigo);
+
+    while (fread(&clnt, sizeof(cliente), 1, pFile2))
     {
-        vnd[i].codigo = obterProximoCodigoVenda(); // Obtém o próximo código para a venda.
-
-        fflush(stdin);
-        printf("Insira o nome do cliente: ");
-        scanf("%[^\n]s", vnd[i].nomeCliente); // Lê o nome do cliente.
-
-        vnd[i].qtdProdutos = 0; // Inicializa a quantidade de produtos no pedido.
-
-        listarCardapio(); // Chama a função listarCardapio para mostrar os produtos disponíveis.
-        while (1)
+        if(clnt.codigo == codigo)
         {
-            int codigoProduto;
-
-            printf("Insira o código do produto a ser adicionado (0 para finalizar): ");
-            scanf("%i", &codigoProduto);
-
-            if (codigoProduto == 0) break; // Finaliza a adição de produtos quando o código é 0.
-
-            int produtoExiste = 0;
-
-            rewind(pFile1); // Volta ao início do arquivo de produtos.
-            while (fread(&cardap, sizeof(cardapio), 1, pFile1))
+            strcpy(vnd[0].nomeCliente, clnt.nome);
+            // Encontra o próximo índice disponível no array de pedidos
+            int i;
+            for (i = 0; i < 200; i++)
             {
-                if (cardap.codigo == codigoProduto)
+                if (clnt.pedidos[i] == 0)
                 {
-                    produtoExiste = 1;
-                    vnd[i].pedido[vnd[i].qtdProdutos] = codigoProduto;
-                    vnd[i].qtdProdutos++;
-                    printf("Produto adicionado ao pedido.\n");
+                    clnt.pedidos[i] = vnd[0].codigo;
                     break;
                 }
             }
 
-            if (!produtoExiste) printf("Código de produto inexistente. Tente novamente.\n");
+            fseek(pFile2, -sizeof(cliente), SEEK_CUR);
+            fwrite(&clnt, sizeof(cliente), 1, pFile2);
+            fflush(pFile2);
+
+            break;
+        }
+    }
+
+    vnd[0].qtdProdutos = 0; // Inicializa a quantidade de produtos no pedido.
+
+    listarCardapioPedido(); // Chama a função listarCardapio para mostrar os produtos disponíveis.
+    while (1)
+    {
+        int codigoProduto;
+
+        printf("Insira o código do produto a ser adicionado (0 para finalizar): ");
+        scanf("%i", &codigoProduto);
+
+        if (codigoProduto == 0) break; // Finaliza a adição de produtos quando o código é 0.
+
+        int produtoExiste = 0;
+
+        rewind(pFile1); // Volta ao início do arquivo de produtos.
+        while (fread(&cardap, sizeof(cardapio), 1, pFile1))
+        {
+            if (cardap.codigo == codigoProduto)
+            {
+                produtoExiste = 1;
+                vnd[0].pedido[vnd[0].qtdProdutos] = codigoProduto;
+                vnd[0].qtdProdutos++;
+                printf("Produto adicionado ao pedido.\n");
+                break;
+            }
         }
 
-        fwrite(&vnd[i], sizeof(vendas), 1, pFile); // Escreve os dados da venda no arquivo.
+        if (!produtoExiste) printf("Código de produto inexistente. Tente novamente.\n");
     }
+
+    fwrite(&vnd[0], sizeof(vendas), 1, pFile); // Escreve os dados da venda no arquivo.
+
     fclose(pFile); // Fecha o arquivo de vendas.
 }
-

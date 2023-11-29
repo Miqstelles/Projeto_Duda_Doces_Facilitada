@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1698807396 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\main.c
+1701280675 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\main.c
 	<locale.h>
 	<stdio.h>
 	<string.h>
 	<ctype.h>
 	<stdlib.h>
 	<windows.h>
+	"cores.h"
 
 1696905777 source:c:\users\43627371895\desktop\projeto_esboço-inicio\biblioteca\c1.c
 	<stdio.h>
@@ -184,4 +185,214 @@
 	<stdlib.h>
 	"vendas.h"
 	"cardapio.h"
+
+1701136835 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\adicionaringrediente.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1701231631 c:\users\43627371895\desktop\projeto_duda_doces_facilitada\ingredientes.h
+
+1701232623 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\adicionarprodutocardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+	"windows.h"
+	"cores.h"
+
+1699587482 c:\users\43627371895\desktop\projeto_duda_doces_facilitada\vendas.h
+	"cardapio.h"
+
+1701231974 c:\users\43627371895\desktop\projeto_duda_doces_facilitada\cardapio.h
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\atualizaringrediente.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1701233501 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\atualizarprodutocardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+
+1701232705 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\cardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+	"cores.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\deletaringrediente.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1701231779 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\deletarprodutocardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\getnomeingredienteporcodigo.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+
+1701233281 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\getprodutoporcodigo.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+
+1701225086 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\ingredientes.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+	"cores.h"
+
+1701232049 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\listarcardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+
+1701231321 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\listaringrediente.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1701217569 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\listarvendas.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+
+1701235667 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\novopedido.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"clientes.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\obterproximocodigo.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\obterproximocodigocardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\obterproximocodigovenda.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\pesquisaringrediente.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\pesquisarpedido.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\pesquisarprodutocardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
+
+1699587482 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\qtdingredientes.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1701221368 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\vendas.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"cores.h"
+
+1701131523 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\verificacao.c
+	<stdio.h>
+	<stdlib.h>
+	<conio.h>
+	<ctype.h>
+	"cores.h"
+
+1701131482 c:\users\43627371895\desktop\projeto_duda_doces_facilitada\cores.h
+
+1701214889 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\clientes.c
+	<stdio.h>
+	<stdlib.h>
+	"cores.h"
+
+1701234321 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\cadastrarcliente.c
+	<stdio.h>
+	<stdlib.h>
+	"clientes.h"
+
+1701221570 c:\users\43627371895\desktop\projeto_duda_doces_facilitada\clientes.h
+
+1701214228 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\obterproximocodigocliente.c
+	<stdio.h>
+	<stdlib.h>
+	"clientes.h"
+
+1701230986 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\listarclientes.c
+	<stdio.h>
+	<stdlib.h>
+	"clientes.h"
+	"cores.h"
+
+1701230189 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\pesquisarcliente.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+	<string.h>
+	"clientes.h"
+	"cores.h"
+
+1700870594 c:\users\43627371895\desktop\projeto_duda_doces_facilitada\verificacao.h
+
+1701221552 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\listarclientespedido.c
+	<stdio.h>
+	<stdlib.h>
+	"clientes.h"
+
+1701228736 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\pesquisarpedidoporid.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cores.h"
+
+1701231679 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\listaringredientecardapio.c
+	<stdio.h>
+	<stdlib.h>
+	"ingredientes.h"
+
+1701232818 source:c:\users\43627371895\desktop\projeto_duda_doces_facilitada\listarcardapiopedido.c
+	<stdio.h>
+	<stdlib.h>
+	"vendas.h"
+	"cardapio.h"
+	"ingredientes.h"
 
