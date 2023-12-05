@@ -2,8 +2,7 @@
 #define VENDAS_H
 #include "cardapio.h"
 
-typedef struct vendas
-{
+typedef struct vendas{
     int codigo;
     int pedido[80];
     int qtdProdutos;

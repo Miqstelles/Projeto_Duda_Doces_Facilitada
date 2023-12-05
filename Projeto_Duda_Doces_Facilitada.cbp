@@ -37,10 +37,16 @@
 		<Unit filename="adicionarProdutoCardapio.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="ativarDesativarIngrediente.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="atualizarIngrediente.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="atualizarProdutoCardapio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="cadastrarCliente.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="cardapio.c">
@@ -49,14 +55,14 @@
 		<Unit filename="cardapio.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="codigoJaExiste.c">
+		<Unit filename="clientes.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="codigoJaExisteCardapio.c">
-			<Option compilerVar="CC" />
+		<Unit filename="clientes.h">
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="deletarIngrediente.c">
-			<Option compilerVar="CC" />
+		<Unit filename="cores.h">
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="deletarProdutoCardapio.c">
 			<Option compilerVar="CC" />
@@ -76,7 +82,19 @@
 		<Unit filename="listarCardapio.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="listarCardapioPedido.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="listarClientes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="listarClientesPedido.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="listarIngrediente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="listarIngredienteCardapio.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="listarVendas.c">
@@ -94,13 +112,25 @@
 		<Unit filename="obterProximoCodigoCardapio.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="obterProximoCodigoCliente.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="obterProximoCodigoVenda.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pedidoPertenceAoCliente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pesquisarCliente.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="pesquisarIngrediente.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="pesquisarPedido.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pesquisarPedidoPorId.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="pesquisarProdutoCardapio.c">
@@ -114,6 +144,15 @@
 		</Unit>
 		<Unit filename="vendas.h">
 			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="verificacao.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="verificacao.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="verificacaoCodigo.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />

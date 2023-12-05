@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "vendas.h"
 #include "cardapio.h"
+#include "cores.h"
 
 void listarVendas(){
     vendas vnd; // Declara a estrutura chamada vendas.
@@ -13,10 +14,10 @@ void listarVendas(){
 
         while (fread(&vnd, sizeof(vendas), 1, pFile)) // Lê um registro de vendas do arquivo.
         {
-            printf("\nCódigo: %i\n", vnd.codigo); // Exibe o código da venda.
-            printf("Cliente: %s\n", vnd.nomeCliente); // Exibe o nome do cliente.
+            printf(GREEN "\nCódigo: " RESET "%i\n", vnd.codigo); // Exibe o código da venda.
+            printf(RED "Cliente: "RESET "%s\n" , vnd.nomeCliente); // Exibe o nome do cliente.
 
-            printf("Produtos:\n");
+            printf(YELLOW "\nProdutos:\n" RESET);
 
             float valorPedido = 0;
 
@@ -26,10 +27,10 @@ void listarVendas(){
                 cardapio produto = getProdutoPorCodigo(codigoProduto); // Obtém informações do produto pelo código.
 
                 valorPedido += produto.preco; // Adiciona o preço do produto ao valor total do pedido.
-                printf("  Nome: %s\n", produto.nome); // Exibe o nome do produto no pedido.
+                printf(GREEN "  Nome: " RESET "%s\n" , produto.nome); // Exibe o nome do produto no pedido.
             }
 
-            printf("\nPreço Total do Pedido: %.2f\n", valorPedido); // Exibe o preço total do pedido com duas casas decimais.
+            printf("\nPreço Total do Pedido: " GREEN "R$ %.2f\n" RESET, valorPedido); // Exibe o preço total do pedido com duas casas decimais.
 
             printf("------------------------------------------\n------------------------------------------");
             printf("\n\n"); // Exibe linhas de separação após cada venda.
@@ -65,7 +66,7 @@ void listarVendas(){
         }
 
         fclose(pFile); // Fecha o arquivo após a leitura.
-
+        system("cls");
     } while (escolha != 0);
 
     system("cls"); // Limpa a tela antes de sair da função.

@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "vendas.h"
-#include "cardapio.h"
 #include "cores.h"
 
-void telaVendas()
+void telaClientes()
 {
     int escolha;
 
@@ -12,13 +10,13 @@ void telaVendas()
     {
         printf(YELLOW "\n\t-----------------------------------------\n\t|\t\t\t\t\t|");
         printf("\n\t|\t   *------------*\t\t|"  );
-        printf("\n\t|\t   |   Vendas   |    \t\t|\n");
+        printf("\n\t|\t   |  Clientes  |    \t\t|\n");
         printf("\t|");
         printf("\t   *------------*\t\t|\n\t|\t\t\t\t\t|" RESET);
 
-        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Novo Pedido\t\t "  YELLOW "\t|");
-        printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Listar Pedidos" YELLOW "\t\t|");
-        printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Pesquisar Pedido" YELLOW "\t\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Cadastrar Cliente\t\t"  YELLOW "|");
+        printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Listar Clientes" YELLOW "\t\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Pesquisar Cliente" YELLOW "\t\t|");
         printf(YELLOW "\n\t|" RESET RED "\t0 - " RESET "Sair" YELLOW "\t\t\t|\n");
         printf(YELLOW "\t| \t\t\t\t\t|");
         printf("\n\t-----------------------------------------\n" RESET);
@@ -29,15 +27,25 @@ void telaVendas()
         {
         case '1':
             system("cls");
-            novoPedido();
+            char resposta;
+
+            do
+            {
+                cadastrarCliente();
+                printf("Deseja cadastrar mais algum cliente(S/N)?: ");
+                scanf(" %c", &resposta);
+                resposta = toupper(resposta);
+            }
+            while(resposta != 'N');
+
             break;
         case '2':
             system("cls");
-            listarVendas();
+            listarClientes();
             break;
         case '3':
             system("cls");
-            pesquisarPedido();
+            pesquisarCliente();
             break;
         default:
             system("cls");
@@ -47,4 +55,3 @@ void telaVendas()
 
     system("cls");
 }
-

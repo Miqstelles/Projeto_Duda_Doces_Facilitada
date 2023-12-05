@@ -17,7 +17,6 @@ cardapio getProdutoPorCodigo(int codigo)
             break; // Sai do loop, pois o produto foi encontrado.
         }
     }
-
     fclose(pFile); // Fecha o arquivo após a leitura.
 
     return produtoEncontrado; // Retorna a estrutura do produto encontrado ou uma estrutura vazia se o produto não for encontrado.

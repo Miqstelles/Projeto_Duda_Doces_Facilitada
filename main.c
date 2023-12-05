@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <windows.h>
+#include "cores.h"
+#define MAX_LEN 128
 
 void barraDeLoading()
 {
@@ -34,7 +36,7 @@ void barraDeLoading()
 
 int main()
 {
-    barraDeLoading();
+    //barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese");
     system("chcp 1252 > nul");
@@ -42,16 +44,21 @@ int main()
     int escolha;
 
     do
-    {
-        printf("\nBem Vindo\n");
-        printf("\n1 - Vendas");
-        printf("\n2 - Cardapio");
-        printf("\n3 - Estoque de Ingredientes");
-        printf("\n0 - Sair");
+    {   printf(YELLOW "\n\t-----------------------------------------\n\t|\t\t\t\t\t|");
+        printf("\n\t|\t   *-----------*\t\t|"  );
+        printf("\n\t|\t   | Bem Vindo | \t\t|\n");
+        printf("\t|");
+        printf("\t   *-----------*\t\t|\n\t|\t\t\t\t\t|" RESET);
 
-        int read = 0;
+        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Vendas\t\t "  YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Cardapio" YELLOW "\t\t\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Estoque de Ingredientes" YELLOW "\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t4 - " RESET "Clientes" YELLOW "\t\t\t|");
+        printf(YELLOW "\n\t|" RESET RED "\t0 - " RESET "Sair" YELLOW "\t\t\t|\n");
+        printf(YELLOW "\t| \t\t\t\t\t|");
+        printf("\n\t-----------------------------------------\n" RESET);
 
-        escolha = verificacao();
+        escolha = verificacao('4', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpção inválida !!!\n" RESET);
 
         switch (escolha)
         {
@@ -67,12 +74,21 @@ int main()
             system("cls");
             telaEstoqueIngredientes();
             break;
+        case '4':
+            system("cls");
+            telaClientes();
+            break;
         default:
             system("cls");
+            break;
         }
     } while (escolha != '0');
 
-    printf("\nVolte sempre!\n");
+    FILE * pFile;
+    pFile = fopen("bolo.txt", "r");
+    char read_string[MAX_LEN];
+
+    while(fgets(read_string,sizeof(read_string), pFile) != NULL) printf("%s",read_string);
 
     return 0;
 }

@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ingredientes.h"
-#include "cores.h"
 
-void listarIngrediente(){
-    system("cls");
+void listarIngredienteCardapio(){
+    int escolha;
 
     ingredientes ing1; // Declara a estrutura chamada ingredientes.
     FILE *pFile; // Declara um ponteiro de arquivo.
@@ -12,15 +11,16 @@ void listarIngrediente(){
 
     printf("\n=========================================================");
     printf("\nEstoque\n");
-    printf(GREEN "\nCódigo " RESET RED "\t Nome " RESET YELLOW "\t\t   Quantidade\n" RESET);
+    printf("\nCódigo \t Nome \t\t   Quantidade");
 
     while (fread(&ing1, sizeof(ingredientes), 1, pFile)) // Lê um registro de ingredientes do arquivo.
     {
-        printf(GREEN"\n%-9i" RESET "%-20s%4i", ing1.codigo, ing1.nome, ing1.quantidade); // Exibe o código, nome e quantidade do ingrediente em um formato de tabela.
+        printf("\n%-9i%-20s%4i", ing1.codigo, ing1.nome, ing1.quantidade); // Exibe o código, nome e quantidade do ingrediente em um formato de tabela.
     }
 
     printf("\n=========================================================\n"); // Exibe uma linha de separação após listar os ingredientes.
 
     fclose(pFile); // Fecha o arquivo após a leitura.
 }
+
 

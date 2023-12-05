@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "vendas.h"
 #include "cardapio.h"
+#include "cores.h"
 
 void pesquisarPedido()
 {
@@ -13,6 +14,8 @@ void pesquisarPedido()
     int codigo, encontrou = 0;
     printf("Insira o código do pedido: ");
     scanf("%i", &codigo); // Solicita o código do pedido a ser pesquisado.
+
+    char tipoProduto[3][80] = {"Bolo", "Doce", "Sobremesa"};
 
     while (fread(&vnd, sizeof(vendas), 1, pFile))
     {
@@ -34,22 +37,26 @@ void pesquisarPedido()
 
                 valorPedido += produto.preco;
 
-                printf("  Nome: %s\n", produto.nome);
-                printf("  Tipo: %s\n", (produto.tipo == 1) ? "Bolo" : (produto.tipo == 2) ? "Doce" : "Sobremesa");
-                printf("  Preço: %.2f\n\n", produto.preco);
+                printf(GREEN "\nCódigo: " RESET "%i\n", produto.codigo); // Exibe o código do produto.
+                printf(RED "Nome: " RESET "%s\n", produto.nome); // Exibe o nome do produto.
+                printf(YELLOW "Tipo: " RESET "%s\n", tipoProduto[produto.tipo - 1]); // Exibe o tipo do produto com base no valor numérico.
+                printf("\nQuantidade de Ingredientes: %i\n", produto.qtdIngredientes); // Exibe a quantidade de ingredientes no produto.
 
-                printf("  Ingredientes:\n");
+                printf(YELLOW"\nIngredientes:\n" RESET);
                 for (int j = 0; j < produto.qtdIngredientes; j++)
                 {
                     int codigoIngrediente = produto.listaIngredientes[j];
                     char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
-                    printf("    %s\n", nomeIngrediente);
+                    if (strstr(nomeIngrediente, "(DESATIVADO)") == NULL)
+                    {
+                        printf(GREEN "  ID:" RESET " %i " GREEN "Nome: " RESET "%s\n", codigoIngrediente, nomeIngrediente); // Exibe o código e nome do ingrediente.
+                    }
                 }
                 printf("\n  -------------------\n");
                 printf("\n");
             }
 
-            printf("Preço Total do Pedido: %.2f\n", valorPedido);
+            printf("Preço Total do Pedido: " GREEN "R$ %.2f\n" RESET, valorPedido);
 
             printf("------------------------------------------");
             printf("\n\n");

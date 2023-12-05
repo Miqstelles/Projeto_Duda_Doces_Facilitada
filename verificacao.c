@@ -2,33 +2,33 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <ctype.h>
+#include "cores.h"
+#define MAXCHAR 128
 
-char verificacao(){
-
+char verificacao(char maxNumero, char textoEscolha[MAXCHAR], char textoErro[MAXCHAR]){
     char escolha;
+    int maxNumeroInt = maxNumero - 48;
+    int escolhaInt;
     int i=0;
 
     do{
-
-        printf("\nDigite sua escolha: ");
+        printf("%s", textoEscolha) ;
         fflush(stdin);
 
         escolha=getch();
+        escolhaInt = escolha - '0';
 
-        if(isdigit(escolha)!= 0){
-            if(escolha != '0' && escolha != '1' && escolha != '2' && escolha != '3' && escolha != '4' && escolha != '5' && escolha != '6'){
-                printf("\nOpção invalida !!!\n");
+        if(isdigit(escolha) != 0){
+            if(escolhaInt < 0 || escolhaInt > maxNumeroInt){
+                printf("%s", textoErro);
                 Sleep(500);
                 continue;
             }
             return escolha;
-        }else{
-
-            printf("\nOpção invalida !!!\n");
-            Sleep(500);
-            continue;
         }
 
+        printf("%s", textoErro);
+        Sleep(500);
+        continue;
     }while(i==1);
-
 }
