@@ -7,7 +7,7 @@
 
 void atualizarProdutoCardapio()
 {
-    listarCardapioPedido(); // Chama a função listarCardapio para mostrar os produtos no cardápio.
+    listarCardapioPedido(); // Chama a funï¿½ï¿½o listarCardapio para mostrar os produtos no cardï¿½pio.
 
     cardapio cardap; // Declara uma estrutura chamada cardapio.
     FILE *pFile; // Declara um ponteiro de arquivo para "cardapio.txt".
@@ -15,13 +15,13 @@ void atualizarProdutoCardapio()
     pFile = fopen("cardapio.txt", "r+"); // Abre o arquivo "cardapio.txt" para leitura e escrita.
 
     int codigo, encontrou = 0;
-    codigo = verificacaoCodigo("Insira o código do produto a ser atualizado: ", "ERRO Insira um código válido");
+    codigo = verificacaoCodigo("Insira o cï¿½digo do produto a ser atualizado: ", "ERRO Insira um cï¿½digo vï¿½lido");
 
     char buffer[200];
 
     while (fread(&cardap, sizeof(cardapio), 1, pFile))
     {
-        if (cardap.codigo == codigo)  // Verifica se o código do produto corresponde ao código fornecido.
+        if (cardap.codigo == codigo)  // Verifica se o cï¿½digo do produto corresponde ao cï¿½digo fornecido.
         {
             encontrou = 1; // Define a flag para indicar que o produto foi encontrado.
 
@@ -35,7 +35,7 @@ void atualizarProdutoCardapio()
             {
                 fflush(stdin);
                 printf("Insira o novo nome do produto: ");
-                scanf("%[^\n]s", cardap.nome); // Lê o novo nome do produto.
+                scanf("%[^\n]s", cardap.nome); // Lï¿½ o novo nome do produto.
                 strcat(cardap.nome,  GREEN " (ATIVADO)" RESET);
             }
 
@@ -45,7 +45,7 @@ void atualizarProdutoCardapio()
 
             while (escolhaAtualizar != 'S' && escolhaAtualizar != 'N')
             {
-                printf("ERRO! Escolha inválida!\nDeseja atualizar o tipo do produto? (S/N): ");
+                printf("ERRO! Escolha invï¿½lida!\nDeseja atualizar o tipo do produto? (S/N): ");
                 scanf(" %c", &escolhaAtualizar);
                 escolhaAtualizar = toupper(escolhaAtualizar);
             }
@@ -62,27 +62,27 @@ void atualizarProdutoCardapio()
 
             while (escolhaAtualizar != 'S' && escolhaAtualizar != 'N')
             {
-                printf("ERRO! Escolha inválida!\nDeseja atualizar o valor do produto? (S/N): ");
+                printf("ERRO! Escolha invï¿½lida!\nDeseja atualizar o valor do produto? (S/N): ");
                 scanf(" %c", &escolhaAtualizar);
                 escolhaAtualizar = toupper(escolhaAtualizar);
             }
 
             if (escolhaAtualizar == 'S')
             {
-                printf("Insira o novo preço do produto: ");
+                printf("Insira o novo preï¿½o do produto: ");
                 while (1)
                 {
-                    // Lê a entrada como uma string
+                    // Lï¿½ a entrada como uma string
                     if (fgets(buffer, sizeof(buffer), stdin) != NULL)
                     {
-                        // Verifica se a string contém apenas dígitos e ponto decimal
+                        // Verifica se a string contï¿½m apenas dï¿½gitos e ponto decimal
                         char *endptr;
                         cardap.preco = strtod(buffer, &endptr);
 
                         if (endptr == buffer || *endptr != '\n')
                         {
-                            // A conversão falhou ou há caracteres não convertidos
-                            printf("Entrada inválida. Por favor, insira um valor válido: ");
+                            // A conversï¿½o falhou ou hï¿½ caracteres nï¿½o convertidos
+                            printf("Entrada invï¿½lida. Por favor, insira um valor vï¿½lido: ");
                         }
                         else
                         {
@@ -94,7 +94,7 @@ void atualizarProdutoCardapio()
                         // Limpa o buffer de entrada em caso de erro
                         while (getchar() != '\n')
                             ;
-                        printf("Erro na leitura. Por favor, insira um valor válido: ");
+                        printf("Erro na leitura. Por favor, insira um valor vï¿½lido: ");
                     }
                 }
             }
@@ -111,16 +111,16 @@ void atualizarProdutoCardapio()
                     if (cardap.qtdIngredientes < 30)
                     {
                         int codigoIngrediente;
-                        listarIngredienteCardapio(); // Chama a função listarIngrediente para mostrar os ingredientes disponíveis.
+                        listarIngredienteCardapio(); // Chama a funï¿½ï¿½o listarIngrediente para mostrar os ingredientes disponï¿½veis.
 
-                        codigoIngrediente = verificacaoCodigo("Insira o código do ingrediente a ser adicionado: ", RED "ERRO INSIRA UM CÓDIGO DE INGREDIENTE VÁLIDO" RESET);
+                        codigoIngrediente = verificacaoCodigo("Insira o cï¿½digo do ingrediente a ser adicionado: ", RED "ERRO INSIRA UM Cï¿½DIGO DE INGREDIENTE Vï¿½LIDO" RESET);
 
                         int ingredienteRepetido = 0;
                         for (int j = 0; j < cardap.qtdIngredientes; j++)
                         {
                             if (cardap.listaIngredientes[j] == codigoIngrediente)
                             {
-                                printf("Este ingrediente já foi adicionado ao produto.\n");
+                                printf("Este ingrediente jï¿½ foi adicionado ao produto.\n");
                                 ingredienteRepetido = 1;
                                 break;
                             }
@@ -133,7 +133,7 @@ void atualizarProdutoCardapio()
                         }
                     }
                     else
-                        printf("Lista de ingredientes cheia. Não é possível adicionar mais ingredientes.\n");
+                        printf("Lista de ingredientes cheia. Nï¿½o ï¿½ possï¿½vel adicionar mais ingredientes.\n");
                 }
                 else if (escolha == 'D')
                 {
@@ -141,9 +141,9 @@ void atualizarProdutoCardapio()
                     if (cardap.qtdIngredientes > 0)
                     {
                         int codigoIngrediente;
-                        cardapio produto = getProdutoPorCodigo(codigo); // Chama a função listarCardapio para mostrar os ingredientes no produto.
+                        cardapio produto = getProdutoPorCodigo(codigo); // Chama a funï¿½ï¿½o listarCardapio para mostrar os ingredientes no produto.
 
-                        printf("\nCódigo: %i\n", produto.codigo);
+                        printf("\nCï¿½digo: %i\n", produto.codigo);
                         printf("Nome: %s\n", produto.nome);
                         printf("Tipo: %s\n", produto.tipo == 1 ? "Bolo" : produto.tipo == 2 ? "Doce" : "Sobremesa");
                         printf("\nQuantidade de Ingredientes: %i\n", produto.qtdIngredientes);
@@ -157,12 +157,12 @@ void atualizarProdutoCardapio()
                             printf("  Nome: (%i)%s\n", produto.listaIngredientes[i], nomeIngrediente);
                         }
 
-                        printf("\nPreço: %.2f\n", produto.preco);
+                        printf("\nPreï¿½o: %.2f\n", produto.preco);
 
                         printf("------------------------------------------\n------------------------------------------");
                         printf("\n\n");
 
-                        codigoIngrediente = verificacaoCodigo("Insira o código do ingrediente a ser deletado: ", RED "ERRO INSIRA UM CÓDIGO DE INGREDIENTE VÁLIDO");
+                        codigoIngrediente = verificacaoCodigo("Insira o cï¿½digo do ingrediente a ser deletado: ", RED "ERRO INSIRA UM Cï¿½DIGO DE INGREDIENTE Vï¿½LIDO");
 
                         int ingredienteValido = 0;
                         for (int j = 0; j < cardap.qtdIngredientes; j++)
@@ -180,10 +180,10 @@ void atualizarProdutoCardapio()
                         }
 
                         if (!ingredienteValido)
-                            printf("Código de ingrediente inválido ou não encontrado no produto.\n");
+                            printf("Cï¿½digo de ingrediente invï¿½lido ou nï¿½o encontrado no produto.\n");
                     }
                     else
-                        printf("O produto não possui ingredientes para deletar.\n");
+                        printf("O produto nï¿½o possui ingredientes para deletar.\n");
                 }
 
                 printf("Deseja continuar a adicionar (A) ou deletar (D) ingredientes? (A/D/0 para finalizar): ");
@@ -192,7 +192,7 @@ void atualizarProdutoCardapio()
             }
             system("cls");
 
-            fseek(pFile, -sizeof(cardapio), SEEK_CUR); // Volta para a posição do último registro lido.
+            fseek(pFile, -sizeof(cardapio), SEEK_CUR); // Volta para a posiï¿½ï¿½o do ï¿½ltimo registro lido.
             fwrite(&cardap, sizeof(cardapio), 1, pFile);   // Escreve os dados atualizados no arquivo.
             break;
         }
@@ -202,6 +202,6 @@ void atualizarProdutoCardapio()
 
     if (!encontrou)
     {
-        printf("Produto não encontrado!\n"); // Exibe uma mensagem se o produto não for encontrado.
+        printf("Produto nï¿½o encontrado!\n"); // Exibe uma mensagem se o produto nï¿½o for encontrado.
     }
 }

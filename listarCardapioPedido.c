@@ -12,11 +12,11 @@ void listarCardapioPedido()
 
     char tipoProduto[3][80] = {"Bolo", "Doce", "Sobremesa"};
 
-    while (fread(&cardap, sizeof(cardapio), 1, pFile)) // Lê um registro de cardapio do arquivo.
+    while (fread(&cardap, sizeof(cardapio), 1, pFile)) // Lï¿½ um registro de cardapio do arquivo.
     {
-        printf(GREEN "\nCódigo: " RESET "%i\n", cardap.codigo); // Exibe o código do produto.
+        printf(GREEN "\nCï¿½digo: " RESET "%i\n", cardap.codigo); // Exibe o cï¿½digo do produto.
         printf(RED "Nome: " RESET "%s\n", cardap.nome); // Exibe o nome do produto.
-        printf(YELLOW "Tipo: " RESET "%s\n", tipoProduto[cardap.tipo - 1]); // Exibe o tipo do produto com base no valor numérico.
+        printf(YELLOW "Tipo: " RESET "%s\n", tipoProduto[cardap.tipo - 1]); // Exibe o tipo do produto com base no valor numï¿½rico.
         printf("\nQuantidade de Ingredientes: %i\n", cardap.qtdIngredientes); // Exibe a quantidade de ingredientes no produto.
 
         printf("Ingredientes:\n");
@@ -24,17 +24,17 @@ void listarCardapioPedido()
         for (int i = 0; i < cardap.qtdIngredientes; i++)
         {
             int codigoIngrediente = cardap.listaIngredientes[i];
-            char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente); // Obtém o nome do ingrediente com base no código.
-            printf("  Nome: (%i)%s\n", cardap.listaIngredientes[i], nomeIngrediente); // Exibe o código e nome do ingrediente.
+            char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente); // Obtï¿½m o nome do ingrediente com base no cï¿½digo.
+            printf("  Nome: (%i)%s\n", cardap.listaIngredientes[i], nomeIngrediente); // Exibe o cï¿½digo e nome do ingrediente.
         }
 
-        printf("\nPreço: %.2f\n", cardap.preco); // Exibe o preço do produto com duas casas decimais.
+        printf("\nPreï¿½o: %.2f\n", cardap.preco); // Exibe o preï¿½o do produto com duas casas decimais.
 
         printf("------------------------------------------\n------------------------------------------");
-        printf("\n\n"); // Exibe linhas de separação entre os produtos.
+        printf("\n\n"); // Exibe linhas de separaï¿½ï¿½o entre os produtos.
     }
 
-    fclose(pFile); // Fecha o arquivo após a leitura.
+    fclose(pFile); // Fecha o arquivo apï¿½s a leitura.
 
 }
 

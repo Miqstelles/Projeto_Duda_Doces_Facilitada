@@ -17,7 +17,7 @@ void telaCardapio()
         printf("\t|");
         printf("\t   *------------*\t\t  |\n\t|\t\t\t\t\t  |" RESET);
 
-        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Adicionar Produto no Cardápio"  YELLOW " |");
+        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Adicionar Produto no Cardï¿½pio"  YELLOW " |");
         printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Listar Cardapio" YELLOW "\t\t  |");
         printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Pesquisar Produto" YELLOW "\t\t  |");
         printf(YELLOW "\n\t|" RESET RED "\t4 - " RESET "Atualizar Produto" YELLOW "\t\t  |");
@@ -26,7 +26,7 @@ void telaCardapio()
         printf(YELLOW "\t| \t\t\t\t\t  |");
         printf("\n\t-------------------------------------------\n" RESET);
 
-        escolha = verificacao('5', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpção inválida !!!\n" RESET);
+        escolha = verificacao('5', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpï¿½ï¿½o invï¿½lida !!!\n" RESET);
 
         switch (escolha)
         {
@@ -40,8 +40,7 @@ void telaCardapio()
                 printf("Deseja adicionar mais algum produto(S/N)?: ");
                 scanf(" %c", &resposta);
                 resposta = toupper(resposta);
-            }
-            while(resposta != 'N');
+            }while(resposta != 'N');
 
             system("cls");
             break;

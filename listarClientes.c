@@ -7,7 +7,8 @@
 void listarClientes()
 {
     cliente clnt;
-    char escolha;
+    int escolha;
+
     do
     {
         FILE *pFile;
@@ -15,7 +16,7 @@ void listarClientes()
 
         printf("\n ========================================================================");
         printf("\n \tClientes \n");
-        printf("\n \t" GREEN "Código " RESET RED "\t Nome " RESET YELLOW "\t\t Pedidos" RESET);
+        printf("\n \t" GREEN "Cï¿½digo " RESET RED "\t Nome " RESET YELLOW "\t\t Pedidos" RESET);
 
         while (fread(&clnt, sizeof(cliente), 1, pFile) == 1)
         {
@@ -23,39 +24,57 @@ void listarClientes()
 
             int numPedidos = 0;
             printf("[");
-            for (int i = sizeof(clnt.pedidos) / sizeof(clnt.pedidos[0]) - 1; i >= 0; i--)
+            for (int i = 0; i < 5 && clnt.pedidos[i] != 0; i++)
             {
-                if (clnt.pedidos[i] == 0) continue;
                 printf("%i", clnt.pedidos[i]);
 
-                if (i > 0 && clnt.pedidos[i - 1] != 0) printf(", ");
+                if (clnt.pedidos[i + 1] != 0) printf(", ");
+
                 numPedidos++;
 
-                if (numPedidos >= 5)
-                {
-                    printf("...");
-                    break;
-                }
+                if (numPedidos >= 5 && clnt.pedidos[numPedidos] != 0) printf("...");
             }
             printf("]");
         }
         printf("\n ========================================================================\n");
 
-
-        escolha = verificacaoCodigo("\n  " RED "1 -" RESET " Detalhar Pedido" "\n  " RED "0 -" RESET " Sair" "\n\nInsira uma opção: ", RED "\nERRO! Digite uma opção válida\n\" RESET);
-
+        int readCliente = 0;
         int codigoCliente;
+        int read;
+
+        printf("\n  " RED "1 -" RESET " Detalhar Pedido" );
+        printf("\n  " RED "0 -" RESET " Sair" );
+
+        while (read != 1)
+        {
+            printf("\n\n  Insira uma opï¿½ï¿½o: ");
+            read = scanf("%i", &escolha);
+
+            if (read != 1)
+            {
+                printf("ERRO! Digite uma opï¿½ï¿½o vï¿½lida");
+                scanf("%*[^\n]"); // Limpa o buffer de entrada em caso de entrada invï¿½lida.
+            }
+        }
+
+        read = 0;
 
         if(escolha == 1)
         {
-            codigoCliente = verificacaoCodigo("\n\n  Insira o ID do cliente para detalhar pedidos(0 - Voltar): ", RED "\n ERRO! Digite um ID de cliente válido!\n" RESET);
+            while (readCliente != 1)
+            {
+                printf("\n\n  Insira o ID do cliente para detalhar pedidos(0 - Voltar): ");
+                readCliente = scanf("%i", &codigoCliente);
+
+                if (readCliente != 1)
+                {
+                    printf("ERRO! Digite um ID de cliente vï¿½lido");
+                    scanf("%*[^\n]"); // Limpa o buffer de entrada em caso de entrada invï¿½lida.
+                }
+            }
             system("cls");
         }
         else if(escolha == 0) break;
-
-        while(escolha < 0 || escolha > 1){
-            codigoCliente = verificacaoCodigo("\n\n  Insira o ID do cliente para detalhar pedidos(0 - Voltar): ", RED "\n ERRO! Digite um ID de cliente válido!\n" RESET);
-        }
 
 
         fclose(pFile);
@@ -79,57 +98,38 @@ void listarClientes()
         }
 
         int escolhaPedido;
-        int codigoPedido = 1;
 
         if (clienteEncontrado)
         {
             do
             {
+                int codigoPedido;
+
                 printf("\n  Pedidos do cliente %s: ", clnt.nome);
 
                 printf("[");
-
-                int ultimoIndice = 0;
-                while (ultimoIndice < sizeof(clnt.pedidos) / sizeof(clnt.pedidos[0]) && clnt.pedidos[ultimoIndice] != 0) ultimoIndice++;
-
-                for (int i = ultimoIndice - 1; i >= 0; i--)
+                for (int i = 0; i < 200 && clnt.pedidos[i] != 0; i++)
                 {
                     printf("%i", clnt.pedidos[i]);
 
-                    if (i > 0) printf(", ");
+                    if (clnt.pedidos[i + 1] != 0) printf(", ");
                 }
-
                 printf("]\n");
-                codigoPedido = verificacaoCodigo("\n\n  Insira uma opção(0 - Voltar): ", RED "  ERRO! Digite uma opção válida" RESET);
 
-                if(codigoPedido == 0)
-                {
-                    system("cls");
-                    break;
-                }
-
-                while(!pedidoPertenceAoCliente(codigoPedido, clnt) && codigoPedido !=0)
-                    codigoPedido = verificacaoCodigo(RED " \n Pedido não encontrado, insira um novo ID de pedido(0 - Sair): " RESET,  RED "ERRO! Digite um ID de cliente válido" RESET);
-
-                if(codigoPedido == 0)
-                {
-                    system("cls");
-                    break;
-                }
+                printf("  Digite o ID do pedido a ser detalhado: ");
+                scanf("%i", &codigoPedido);
 
                 pesquisarPedidoPorID(codigoPedido);
 
-                escolhaPedido = verificacaoCodigo("Pesquisar outro pedido pelo id(0 - Voltar, 1 - Continuar): ", RED "ERRO! Digite um ID de cliente válido" RESET);
+                printf("Pesquisar outro pedido pelo id(0 - Voltar, 1 - Continuar): ");
+                scanf("%d", &escolhaPedido);
 
                 system("cls");
             }
             while(escolhaPedido !=0);
         }
-        else if(codigoCliente != 0)
-        {
-            if(codigoPedido == 0) break;
-            printf(RED "\n  Cliente com o ID %i não encontrado.\n" RESET, codigoCliente);
-        }
+        else if(codigoCliente != 0) printf("\n  Cliente com o ID %i nï¿½o encontrado.\n", codigoCliente);
+
 
         fclose(pFile);
     }

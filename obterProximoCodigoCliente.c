@@ -15,6 +15,6 @@ int obterProximoCodigoCliente(){
 
     fclose(pFile); // Fecha o arquivo de clientes.
 
-    return maiorCodigo + 1; // Retorna o próximo código disponível (maior código + 1).
+    return maiorCodigo + 1; // Retorna o prï¿½ximo cï¿½digo disponï¿½vel (maior cï¿½digo + 1).
 }
 
