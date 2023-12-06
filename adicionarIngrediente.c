@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ingredientes.h"
+#include "verificacao.h"
 #include "cores.h"
 
 void adicionarIngrediente()
@@ -16,11 +17,19 @@ void adicionarIngrediente()
 
     fflush(stdin); // Limpa o buffer de entrada padrão (stdin).
 
-    printf("Insira o nome do ingrediente: ");
-    scanf("%79[^\n]s", ing[0].nome);
-    strcat(ing[0].nome, GREEN " (ATIVADO)" RESET);
+    printf("Insira o nome do produto: ");
+    scanf("%79[^\n]s", ing[0].nome); // Lê o nome do produto.
 
-    ing[0].quantidade = verificacaoCodigo("\nInsira a quantidade em estoque: ", RED "\nERRO INSIRA UMA QUANTIDADE VALIDA" RESET);
+    while(!verificacaoNome(ing[0].nome, RED "\nERRO INSIRA UM NOME VÁLIDO" RESET)){
+       fflush(stdin); // Limpa o buffer de entrada padrão (stdin).
+
+       printf("\nInsira o nome do produto: ");
+       scanf("%79[^\n]s", ing[0].nome); // Lê o nome do ingrediente.
+    }
+
+    strcat(ing[0].nome, GREEN "(ATIVADO)" RESET);
+
+    ing[0].quantidade = verificacaoCodigo("\nInsira a quantidade em estoque: ", RED "\nERRO INSIRA UMA QUANTIDADE VÁLIDA" RESET);
 
     fwrite(&ing[0], sizeof(ingredientes), 1, pFile); // Escreve os dados da estrutura ingredientes no arquivo.
 
