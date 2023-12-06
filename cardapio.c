@@ -17,7 +17,7 @@ void telaCardapio()
         printf("\t|");
         printf("\t   *------------*\t\t  |\n\t|\t\t\t\t\t  |" RESET);
 
-        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Adicionar Produto no Cardï¿½pio"  YELLOW " |");
+        printf(YELLOW "\n\t|" RESET RED "\t1 - " RESET "Adicionar Produto no Cardápio"  YELLOW " |");
         printf(YELLOW "\n\t|" RESET RED "\t2 - " RESET "Listar Cardapio" YELLOW "\t\t  |");
         printf(YELLOW "\n\t|" RESET RED "\t3 - " RESET "Pesquisar Produto" YELLOW "\t\t  |");
         printf(YELLOW "\n\t|" RESET RED "\t4 - " RESET "Atualizar Produto" YELLOW "\t\t  |");
@@ -26,21 +26,25 @@ void telaCardapio()
         printf(YELLOW "\t| \t\t\t\t\t  |");
         printf("\n\t-------------------------------------------\n" RESET);
 
-        escolha = verificacao('5', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpï¿½ï¿½o invï¿½lida !!!\n" RESET);
+        escolha = verificacao('5', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpção inválida !!!\n" RESET);
 
         switch (escolha)
         {
         case '1':
             system("cls");
-            char resposta;
+            int resposta;
 
             do
             {
                 adicionarProdutoCardapio();
-                printf("Deseja adicionar mais algum produto(S/N)?: ");
-                scanf(" %c", &resposta);
-                resposta = toupper(resposta);
-            }while(resposta != 'N');
+                resposta = verificacaoCodigo("Deseja adicionar um produto novamente?(1 - Sim, 0 - Não): ", RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+                while(resposta < 0 || resposta > 1)
+                {
+                    printf(RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+                    resposta = verificacaoCodigo("Deseja adicionar um produto novamente?(1 - Sim, 0 - Não): ", RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+                }
+            }
+            while(resposta != 0);
 
             system("cls");
             break;
@@ -51,11 +55,9 @@ void telaCardapio()
             {
                 system("cls");
                 listarCardapio();
-                printf("Deseja listar novamente(S/N)?: ");
-                scanf(" %c", &resposta);
-                resposta = toupper(resposta);
+                resposta = verificacao('1', "Deseja listar novamente?(1 - Sim, 0 - Não): ", RED "ERRO INSIRA UMA OPÇÃO VÁLIDA" RESET);
             }
-            while(resposta != 'N');
+            while(resposta != '0');
 
             system("cls");
             break;

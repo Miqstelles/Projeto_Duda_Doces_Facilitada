@@ -6,65 +6,76 @@
 
 void pesquisarPedido()
 {
-    vendas vnd; // Declara a estrutura chamada vendas.
-    FILE *pFile; // Declara um ponteiro de arquivo.
-
-    pFile = fopen("vendas.txt", "r"); // Abre o arquivo de vendas para leitura.
-
-    int codigo, encontrou = 0;
-    printf("Insira o código do pedido: ");
-    scanf("%i", &codigo); // Solicita o código do pedido a ser pesquisado.
-
-    char tipoProduto[3][80] = {"Bolo", "Doce", "Sobremesa"};
-
-    while (fread(&vnd, sizeof(vendas), 1, pFile))
+    while(1)
     {
-        if (vnd.codigo == codigo)
+        system("cls");
+        vendas vnd; // Declara a estrutura chamada vendas.
+        FILE *pFile; // Declara um ponteiro de arquivo.
+
+        pFile = fopen("vendas.txt", "r"); // Abre o arquivo de vendas para leitura.
+
+        int codigo, encontrou = 0;
+
+        codigo = verificacaoCodigo("\nInsira o código do pedido(0 - Sair): ", RED "\nERRO INSIRA UM CÓDIGO VÁLIDO\n" RESET);
+        if(codigo == 0) break;
+
+        char tipoProduto[3][80] = {"Bolo", "Doce", "Sobremesa"};
+
+        while (fread(&vnd, sizeof(vendas), 1, pFile))
         {
-            system("cls"); // Limpa a tela (usando "cls" no Windows).
-
-            printf("\nCódigo do Pedido: %i\n", vnd.codigo);
-            printf("Cliente: %s\n\n", vnd.nomeCliente);
-
-            printf("Produtos:\n");
-
-            float valorPedido = 0;
-
-            for (int i = 0; i < vnd.qtdProdutos; i++)
+            if (vnd.codigo == codigo)
             {
-                int codigoProduto = vnd.pedido[i];
-                cardapio produto = getProdutoPorCodigo(codigoProduto);
+                system("cls"); // Limpa a tela (usando "cls" no Windows).
 
-                valorPedido += produto.preco;
+                printf("\nCódigo do Pedido: %i\n", vnd.codigo);
+                printf("Cliente: %s\n\n", vnd.nomeCliente);
 
-                printf(GREEN "\nCódigo: " RESET "%i\n", produto.codigo); // Exibe o código do produto.
-                printf(RED "Nome: " RESET "%s\n", produto.nome); // Exibe o nome do produto.
-                printf(YELLOW "Tipo: " RESET "%s\n", tipoProduto[produto.tipo - 1]); // Exibe o tipo do produto com base no valor numérico.
-                printf("\nQuantidade de Ingredientes: %i\n", produto.qtdIngredientes); // Exibe a quantidade de ingredientes no produto.
+                printf("Produtos:\n");
 
-                printf(YELLOW"\nIngredientes:\n" RESET);
-                for (int j = 0; j < produto.qtdIngredientes; j++)
+                float valorPedido = 0;
+
+                for (int i = 0; i < vnd.qtdProdutos; i++)
                 {
-                    int codigoIngrediente = produto.listaIngredientes[j];
-                    char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
-                    if (strstr(nomeIngrediente, "(DESATIVADO)") == NULL)
+                    int codigoProduto = vnd.pedido[i];
+                    cardapio produto = getProdutoPorCodigo(codigoProduto);
+
+                    valorPedido += produto.preco;
+
+                    printf(GREEN "\nCódigo: " RESET "%i\n", produto.codigo); // Exibe o código do produto.
+                    printf(RED "Nome: " RESET "%s\n", produto.nome); // Exibe o nome do produto.
+                    printf(YELLOW "Tipo: " RESET "%s\n", tipoProduto[produto.tipo - 1]); // Exibe o tipo do produto com base no valor numérico.
+                    printf("\nQuantidade de Ingredientes: %i\n", produto.qtdIngredientes); // Exibe a quantidade de ingredientes no produto.
+
+                    printf(YELLOW"\nIngredientes:\n" RESET);
+                    for (int j = 0; j < produto.qtdIngredientes; j++)
                     {
-                        printf(GREEN "  ID:" RESET " %i " GREEN "Nome: " RESET "%s\n", codigoIngrediente, nomeIngrediente); // Exibe o código e nome do ingrediente.
+                        int codigoIngrediente = produto.listaIngredientes[j];
+                        char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
+                        if (strstr(nomeIngrediente, "(DESATIVADO)") == NULL)
+                        {
+                            printf(GREEN "  ID:" RESET " %i " GREEN "Nome: " RESET "%s\n", codigoIngrediente, nomeIngrediente); // Exibe o código e nome do ingrediente.
+                        }
                     }
+                    printf("\n  -------------------\n");
+                    printf("\n");
                 }
-                printf("\n  -------------------\n");
-                printf("\n");
+
+                printf("Preço Total do Pedido: " GREEN "R$ %.2f\n" RESET, valorPedido);
+
+                printf("------------------------------------------");
+                printf("\n\n");
+
+                encontrou = 1;
             }
-
-            printf("Preço Total do Pedido: " GREEN "R$ %.2f\n" RESET, valorPedido);
-
-            printf("------------------------------------------");
-            printf("\n\n");
-
-            encontrou = 1;
         }
-    }
-    if (!encontrou) printf("Pedido não encontrado!\n"); // Exibe uma mensagem se o pedido não for encontrado.
+        if (!encontrou) printf(RED "Pedido não encontrado!\n" RESET); // Exibe uma mensagem se o pedido não for encontrado.
 
-    fclose(pFile); // Fecha o arquivo de vendas.
+        int escolha;
+
+        escolha = verificacaoCodigo("\n1 - Continuar \n0 - Sair \nInsira uma opção: ", RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+        if(escolha == 0) break;
+
+        fclose(pFile); // Fecha o arquivo de vendas.
+    }
+    system("cls");
 }

@@ -25,37 +25,37 @@ void telaEstoqueIngredientes()
         printf(YELLOW "\t| \t\t\t\t\t|");
         printf("\n\t-----------------------------------------\n" RESET);
 
-        escolha = verificacao('6', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpï¿½ï¿½o invï¿½lida !!!\n" RESET);
+        escolha = verificacao('6', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpção inválida !!!\n" RESET);
 
         switch (escolha)
         {
         case '1':
             system("cls");
-            char resposta;
+            int resposta;
 
             do
             {
                 adicionarIngrediente();
-                printf("Deseja adicionar mais algum ingrediente(S/N)?: ");
-                scanf(" %c", &resposta);
-                resposta = toupper(resposta);
+                resposta = verificacaoCodigo("Deseja adicionar um ingrediente novamente?(1 - Sim, 0 - Não): ", RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+                while(resposta < 0 || resposta > 1) {
+                    printf(RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+                    resposta = verificacaoCodigo("Deseja adicionar um ingrediente novamente?(1 - Sim, 0 - Não): ", RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+                }
                 system("cls");
             }
-            while(resposta != 'N');
+            while(resposta != 0);
 
             break;
         case '2':
             system("cls");
-            int escolha;
             do
             {
                 system("cls");
                 listarIngrediente();
-                printf("Deseja listar novamente(S/N)?: ");
-                scanf(" %c", &resposta);
-                resposta = toupper(resposta);
+                resposta = verificacao('1', "Deseja listar novamente?(1 - Sim, 0 - Não): ", RED "ERRO INSIRA UMA OPÇÃO VÁLIDA" RESET);
+
                 system("cls");
-            }while(resposta != 'N');
+            }while(resposta != '0');
 
             break;
         case '3':

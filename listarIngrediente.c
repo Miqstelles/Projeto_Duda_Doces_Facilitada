@@ -4,34 +4,23 @@
 #include "cores.h"
 
 void listarIngrediente(){
-    int escolha;
+    system("cls");
 
-    do{
-        system("cls");
-        ingredientes ing1; // Declara a estrutura chamada ingredientes.
-        FILE *pFile; // Declara um ponteiro de arquivo.
-        pFile = fopen("estoque_ingredientes.txt", "r"); // Abre o arquivo "estoque_ingredientes.txt" para leitura.
+    ingredientes ing1; // Declara a estrutura chamada ingredientes.
+    FILE *pFile; // Declara um ponteiro de arquivo.
+    pFile = fopen("estoque_ingredientes.txt", "r"); // Abre o arquivo "estoque_ingredientes.txt" para leitura.
 
-        printf("\n=========================================================");
-        printf("\nEstoque\n");
-        printf("\nCï¿½digo \t Nome \t\t   Quantidade");
+    printf("\n=========================================================");
+    printf("\nEstoque\n");
+    printf(GREEN "\nCódigo " RESET RED "\t Nome " RESET YELLOW "\t\t\t\t   Quantidade\n" RESET);
 
-        while (fread(&ing1, sizeof(ingredientes), 1, pFile)) // Lï¿½ um registro de ingredientes do arquivo.
-        {
-            printf("\n%-9i%-20s%4i", ing1.codigo, ing1.nome, ing1.quantidade); // Exibe o cï¿½digo, nome e quantidade do ingrediente em um formato de tabela.
-        }
-
-        printf("\n=========================================================\n"); // Exibe uma linha de separaï¿½ï¿½o apï¿½s listar os ingredientes.
-
-        fclose(pFile); // Fecha o arquivo apï¿½s a leitura.
-
-        printf("\n0 - Sair: ");
-        scanf("%d", &escolha);
-        fclose(pFile); // Fecha o arquivo apï¿½s a leitura.
+    while (fread(&ing1, sizeof(ingredientes), 1, pFile)) // Lê um registro de ingredientes do arquivo.
+    {
+        printf(GREEN"\n%-9i" RESET "%-40s %10i", ing1.codigo, ing1.nome, ing1.quantidade); // Exibe o código, nome e quantidade do ingrediente em um formato de tabela.
     }
-    while(escolha !=0);
 
-    printf("\n=========================================================\n"); // Exibe uma linha de separaï¿½ï¿½o apï¿½s listar os ingredientes.
+    printf("\n=========================================================\n"); // Exibe uma linha de separação após listar os ingredientes.
 
+    fclose(pFile); // Fecha o arquivo após a leitura.
 }
 

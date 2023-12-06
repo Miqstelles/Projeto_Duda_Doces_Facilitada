@@ -9,6 +9,7 @@ void pesquisarPedidoPorID(int codigoPedido) {
     vendas vnd;
 
     int encontrado = 0;
+    char status[3][80] = {YELLOW "Em andamento" RESET, RED "Cancelado" RESET, GREEN "Concluido" RESET};
 
     while (fread(&vnd, sizeof(vendas), 1, pFile) == 1) {
         if (vnd.codigo == codigoPedido) {
@@ -16,7 +17,7 @@ void pesquisarPedidoPorID(int codigoPedido) {
 
             printf("\n  Detalhes do Pedido:\n");
             printf("\n-----------------------------------");
-            printf(YELLOW "\n  Código: " RESET "%i\n", vnd.codigo);
+            printf(GREEN "\n  Código: " RESET "%i \n  Status: %s\n", vnd.codigo, status[vnd.status -1]);
             printf(YELLOW"  Cliente: " RESET "%s", vnd.nomeCliente);
             printf("\n-----------------------------------");
 

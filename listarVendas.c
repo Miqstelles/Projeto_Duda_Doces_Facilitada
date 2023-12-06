@@ -7,6 +7,7 @@
 void listarVendas(){
     vendas vnd; // Declara a estrutura chamada vendas.
     int escolha;
+    char status[3][80] = {YELLOW "Em andamento" RESET, RED "Cancelado" RESET, GREEN "Concluido" RESET};
 
     do
     {
@@ -14,15 +15,14 @@ void listarVendas(){
 
         while (fread(&vnd, sizeof(vendas), 1, pFile)) // Lê um registro de vendas do arquivo.
         {
-            printf(GREEN "\nCódigo: " RESET "%i\n", vnd.codigo); // Exibe o código da venda.
+            printf(GREEN "\nCódigo: " RESET "%i " YELLOW "\nStatus: %s" RESET "\n", vnd.codigo, status[vnd.status -1]); // Exibe o código da venda.
             printf(RED "Cliente: "RESET "%s\n" , vnd.nomeCliente); // Exibe o nome do cliente.
 
             printf(YELLOW "\nProdutos:\n" RESET);
 
             float valorPedido = 0;
 
-            for (int i = 0; i < vnd.qtdProdutos; i++)
-            {
+            for (int i = 0; i < vnd.qtdProdutos; i++){
                 int codigoProduto = vnd.pedido[i];
                 cardapio produto = getProdutoPorCodigo(codigoProduto); // Obtém informações do produto pelo código.
 
@@ -36,22 +36,7 @@ void listarVendas(){
             printf("\n\n"); // Exibe linhas de separação após cada venda.
         }
 
-        printf("\n1 - Detalhar pedido: ");
-        printf("\n0 - Sair");
-
-        int read = 0;
-
-        while (read != 1)
-        {
-            printf("\n\nInsira uma opção: ");
-            read = scanf("%i", &escolha);
-
-            if (read != 1)
-            {
-                printf("ERRO! Digite uma opção válida");
-                scanf("%*[^\n]"); // Limpa o buffer de entrada em caso de entrada inválida.
-            }
-        }
+        escolha = verificacaoCodigo("\n1 - Detalhar pedido: " "\n0 - Sair" "\nInsira uma opção: " , RED "ERRO INSIRA UMA OPÇÃO VÁLIDA" RESET);
 
         if (escolha == 1)
         {
@@ -60,7 +45,7 @@ void listarVendas(){
             {
                 pesquisarPedido(); // Função para pesquisar um pedido em detalhes.
                 printf("\n0 - Voltar: ");
-                scanf("%i", &escolhaPedido);
+                escolhaPedido = verificacaoCodigo("\n0 - Voltar: ", RED "ERRO INSIRA MA OPÇÃO VÁLIDA" RESET);
             } while (escolhaPedido != 0);
             system("cls"); // Limpa a tela após visualizar o pedido em detalhes.
         }

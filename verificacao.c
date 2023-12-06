@@ -18,6 +18,8 @@ char verificacao(char maxNumero, char textoEscolha[MAXCHAR], char textoErro[MAXC
         escolha=getch();
         escolhaInt = escolha - '0';
 
+
+
         if(isdigit(escolha) != 0){
             if(escolhaInt < 0 || escolhaInt > maxNumeroInt){
                 printf("%s", textoErro);

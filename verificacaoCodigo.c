@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <conio.h>
 #include <ctype.h>
 #include <windows.h>
@@ -19,6 +20,13 @@ int verificacaoCodigo(char textoEscolha[MAXCHAR], char textoErro[MAXCHAR]) {
         // Remover o caractere de nova linha (se existir)
         if (escolha[strlen(escolha) - 1] == '\n') {
             escolha[strlen(escolha) - 1] = '\0';
+        }
+
+        // Verificar se a string de entrada está vazia
+        if (strlen(escolha) == 0) {
+            printf("%s", textoErro);
+            Sleep(500);
+            continue;  // Reiniciar o loop
         }
 
         // Verificar se todos os caracteres são dígitos

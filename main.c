@@ -36,7 +36,7 @@ void barraDeLoading()
 
 int main()
 {
-    //barraDeLoading();
+    // barraDeLoading();
 
     setlocale(LC_ALL, "Portuguese");
     system("chcp 1252 > nul");
@@ -58,7 +58,7 @@ int main()
         printf(YELLOW "\t| \t\t\t\t\t|");
         printf("\n\t-----------------------------------------\n" RESET);
 
-        escolha = verificacao('4', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpï¿½ï¿½o invï¿½lida !!!\n" RESET);
+        escolha = verificacao('4', GREEN "\n\n\tDigite sua escolha: " RESET, RED "\n\tOpção inválida !!!\n" RESET);
 
         switch (escolha)
         {

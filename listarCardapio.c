@@ -11,14 +11,13 @@ void listarCardapio()
     FILE *pFile = fopen("cardapio.txt", "r"); // Abre o arquivo "cardapio.txt" para leitura.
 
     char tipoProduto[3][80] = {"Bolo", "Doce", "Sobremesa"};
-    int escolha;
 
     system("cls");
-    while (fread(&cardap, sizeof(cardapio), 1, pFile)) // Lï¿½ um registro de cardapio do arquivo.
+    while (fread(&cardap, sizeof(cardapio), 1, pFile)) // Lê um registro de cardapio do arquivo.
     {
-        printf(GREEN "\nCï¿½digo: " RESET "%i\n", cardap.codigo); // Exibe o cï¿½digo do produto.
+        printf(GREEN "\nCódigo: " RESET "%i\n", cardap.codigo); // Exibe o código do produto.
         printf(RED "Nome: " RESET "%s\n", cardap.nome); // Exibe o nome do produto.
-        printf(YELLOW "Tipo: " RESET "%s\n", tipoProduto[cardap.tipo - 1]); // Exibe o tipo do produto com base no valor numï¿½rico.
+        printf(YELLOW "Tipo: " RESET "%s\n", tipoProduto[cardap.tipo - 1]); // Exibe o tipo do produto com base no valor numérico.
         printf("\nQuantidade de Ingredientes: %i\n", cardap.qtdIngredientes); // Exibe a quantidade de ingredientes no produto.
 
         printf(YELLOW "Ingredientes:\n" RESET);
@@ -27,21 +26,21 @@ void listarCardapio()
         {
             int codigoIngrediente = cardap.listaIngredientes[i];
 
-            // Obtï¿½m o nome do ingrediente com base no cï¿½digo.
+            // Obtém o nome do ingrediente com base no código.
             char *nomeIngrediente = getNomeIngredientePorCodigo(codigoIngrediente);
 
-            // Verifica se o ingrediente nï¿½o estï¿½ desativado antes de imprimir suas informaï¿½ï¿½es
+            // Verifica se o ingrediente não está desativado antes de imprimir suas informações
             if (strstr(nomeIngrediente, "(DESATIVADO)") == NULL)
             {
-                printf(GREEN "  ID:" RESET " %i " GREEN "Nome: " RESET "%s\n", codigoIngrediente, nomeIngrediente); // Exibe o cï¿½digo e nome do ingrediente.
+                printf(GREEN "  ID:" RESET " %i " GREEN "Nome: " RESET "%s\n", codigoIngrediente, nomeIngrediente); // Exibe o código e nome do ingrediente.
             }
         }
 
-        printf("\nPreï¿½o: " GREEN "R$ %.2f\n" RESET, cardap.preco); // Exibe o preï¿½o do produto com duas casas decimais.
+        printf("\nPreço: " GREEN "R$ %.2f\n" RESET, cardap.preco); // Exibe o preço do produto com duas casas decimais.
 
-        printf("\n0 - Sair: ");
-        scanf("%d", &escolha);
+        printf("------------------------------------------\n------------------------------------------");
+        printf("\n\n"); // Exibe linhas de separação entre os produtos.
     }
-    while(escolha !=0);
-    system("cls");
+
+    fclose(pFile); // Fecha o arquivo após a leitura.
 }

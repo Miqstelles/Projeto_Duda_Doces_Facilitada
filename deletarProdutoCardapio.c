@@ -8,17 +8,26 @@
 
 void AtivarDesativarProdutoCardapio()
 {
-    int escolha;
     do
     {
+        system("cls");
         listarCardapio();
 
         cardapio cardap;
         FILE *pFile;
         pFile = fopen("cardapio.txt", "r+");
 
-        int codigo, encontrou = 0;
+        int codigo, escolha, encontrou = 0;
+
         escolha = verificacaoCodigo("\nDeseja Ativar ou Desativar um Produto? (1 - Ativar, 2 - Desativar, 0 - Sair): ", RED "\nERRO: Insira uma opção válida" RESET);
+        if(escolha == 0) break;
+
+        while(escolha < 0 || escolha > 2){
+            printf(RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA" RESET);
+            escolha = verificacaoCodigo("\nDeseja Ativar ou Desativar um Produto?(1 - Ativar, 2 - Desativar, 0 - Sair): ", RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA" RESET);
+        }
+        if(escolha == 0) break;
+
         codigo = verificacaoCodigo("\nInsira o código do produto a ser ativado/desativado: ", RED "\nERRO: Insira um código válido" RESET);
 
         while (fread(&cardap, sizeof(cardapio), 1, pFile))
@@ -50,17 +59,16 @@ void AtivarDesativarProdutoCardapio()
                 break;
             }
         }
+        if (!encontrou) printf("\nProduto não encontrado.\n");
+
+        int escolhaFunc;
+        escolhaFunc = verificacaoCodigo("\n1 - Continuar \n0 - Sair \nInsira uma opção: ", RED "\nERRO INSIRA UMA OPÇÃO VÁLIDA\n" RESET);
+
+        if(escolhaFunc == 0) break;
 
         fclose(pFile);
-
-        if (!encontrou)
-        {
-            printf("\nProduto não encontrado.\n");
-        }
-
-        escolha = verificacaoCodigo("Deseja continuar(0 - Não, 1 - Sim): ", "ERRO INSIRA UMA OPÇÃO VÁLIDA");
     }
-    while(escolha !=0);
+    while(1);
 
     system("cls");
 }

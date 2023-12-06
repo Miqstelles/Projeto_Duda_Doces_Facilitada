@@ -46,6 +46,9 @@
 		<Unit filename="atualizarProdutoCardapio.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="atualizarStatusPedido.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="cadastrarCliente.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -58,8 +61,8 @@
 		<Unit filename="clientes.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="codigoJaExisteCardapio.c">
-			<Option compilerVar="CC" />
+		<Unit filename="clientes.h">
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="cores.h">
 			<Option target="&lt;{~None~}&gt;" />
@@ -118,6 +121,12 @@
 		<Unit filename="obterProximoCodigoVenda.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="pedidoPertenceAoCliente.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pesquisarCliente.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="pesquisarIngrediente.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -138,6 +147,18 @@
 		</Unit>
 		<Unit filename="vendas.h">
 			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="verificacao.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="verificacao.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="verificacaoCodigo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="verificacaoNome.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<lib_finder disable_auto="1" />

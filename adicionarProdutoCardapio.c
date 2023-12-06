@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "vendas.h"
 #include "cardapio.h"
 #include "ingredientes.h"
@@ -17,69 +18,95 @@ void adicionarProdutoCardapio()
     FILE *pFile1; // Declara um ponteiro de arquivo para "estoque_ingredientes.txt".
     int codigo = 1;
 
-    cardap = (cardapio *)calloc(1, sizeof(cardapio)); // Aloca memï¿½ria para a estrutura cardapio.
-    pFile = fopen("cardapio.txt", "a"); // Abre o arquivo "cardapio.txt" em modo de apï¿½ndice.
+    cardap = (cardapio *)calloc(1, sizeof(cardapio)); // Aloca memória para a estrutura cardapio.
+    pFile = fopen("cardapio.txt", "a"); // Abre o arquivo "cardapio.txt" em modo de apêndice.
     pFile1 = fopen("estoque_ingredientes.txt", "r"); // Abre o arquivo "estoque_ingredientes.txt" para leitura.
 
     cardap[0].qtdIngredientes = 0; // Inicializa o campo qtdIngredientes da estrutura cardapio.
 
-    cardap[0].codigo = obterProximoCodigoCardapio();  // Obtï¿½m o prï¿½ximo cï¿½digo para o produto no cardï¿½pio.
+    cardap[0].codigo = obterProximoCodigoCardapio();  // Obtém o próximo código para o produto no cardápio.
 
-    cardap[0].tipo = verificacaoCodigo("\nInsira o tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ", RED "\nERRO INSIRA UM TIPO Vï¿½LIDO" RESET); // Lï¿½ o tipo do produto.
+    cardap[0].tipo = verificacaoCodigo("\nInsira o tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ", RED "\nERRO INSIRA UM TIPO VÁLIDO" RESET); // Lê o tipo do produto.
 
-    while(cardap[0].tipo > 3) cardap[0].tipo = verificacaoCodigo("\nInsira o tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ", RED "\nERRO INSIRA UM TIPO Vï¿½LIDO" RESET); // Lï¿½ o tipo do produto.
+    while(cardap[0].tipo <= 0 || cardap[0].tipo > 3) {
+        printf(RED "\nERRO INSIRA UM TIPO VÁLIDO" RESET);
+        cardap[0].tipo = verificacaoCodigo(RESET "\nInsira o tipo do produto (1 - Bolo, 2 - Doce, 3 - Sobremesa): ", RED "\nERRO INSIRA UM TIPO VÁLIDO" RESET); // Lê o tipo do produto.
+    }
 
-    fflush(stdin);
+    fflush(stdin); // Limpa o buffer de entrada
     printf("Insira o nome do produto: ");
-    scanf("%79[^\n]s", cardap[0].nome); // Lï¿½ o nome do produto.
-    strcat(cardap[0].nome, GREEN " (ATIVADO)" RESET);
+    scanf("%79[^\n]s", cardap[0].nome); // Lê o nome do produto.
 
-    listarIngredienteCardapio(); // Chama a funï¿½ï¿½o listarIngrediente para mostrar os ingredientes disponï¿½veis.
-    listarIngredienteCardapio(); // Chama a funï¿½ï¿½o listarIngrediente para mostrar os ingredientes disponï¿½veis.
+    while(strlen(cardap[0].nome) == 0){
+        printf(RED "\nERRO INSIRA UM NOME VÁLIDO" RESET);
+        printf("\nInsira o nome do produto: ");
+
+        fflush(stdin); // Limpa o buffer de entrada
+        scanf("%79[^\n]s", cardap[0].nome); // Lê o nome do produto.
+    }
+
+    strcat(cardap[0].nome, GREEN "(ATIVADO)" RESET);
+
+    listarIngredienteCardapio(); // Chama a função listarIngrediente para mostrar os ingredientes disponíveis.
 
     while (1)
     {
         int codigoIngrediente;
 
-        codigoIngrediente = verificacaoCodigo("\nInsira o cï¿½digo do ingrediente a ser adicionado (0 para finalizar): ", "\nERRO INSIRA UM CODIGO Vï¿½LIDO"); // Lï¿½ o tipo do produto.
+        codigoIngrediente = verificacaoCodigo("\nInsira o código do ingrediente a ser adicionado (0 para finalizar): ", "\nERRO INSIRA UM CODIGO VÁLIDO"); // Lê o tipo do produto.
 
-        if (codigoIngrediente == 0) break; // Finaliza a adiï¿½ï¿½o de ingredientes quando o cï¿½digo ï¿½ 0.
+        if (codigoIngrediente == 0) break; // Finaliza a adição de ingredientes quando o código é 0.
 
         int ingredienteExiste = 0;
 
-        rewind(pFile1);  // Volta ao inï¿½cio do arquivo de ingredientes.
+        rewind(pFile1);  // Volta ao início do arquivo de ingredientes.
 
         while (fread(&ing1, sizeof(ingredientes), 1, pFile1))
         {
             if (ing1.codigo == codigoIngrediente && strstr(ing1.nome, "(DESATIVADO)") == NULL)
             {
-                // Verifica se o cï¿½digo do ingrediente corresponde ao cï¿½digo fornecido e se nï¿½o estï¿½ desativado.
+                // Verifica se o código do ingrediente corresponde ao código fornecido e se não está desativado.
                 ingredienteExiste = 1; // Define a flag para indicar que o ingrediente foi encontrado.
-                cardap[0].listaIngredientes[cardap[0].qtdIngredientes] = codigoIngrediente; // Adiciona o cï¿½digo do ingrediente ï¿½ lista de ingredientes do produto.
-                cardap[0].qtdIngredientes++; // Incrementa a quantidade de ingredientes no produto.
-                printf("Ingrediente adicionado ao produto.\n");
+                int ingredienteRepetido = 0;
+
+                for (int j = 0; j < cardap[0].qtdIngredientes; j++)
+                {
+                    if (cardap[0].listaIngredientes[j] == codigoIngrediente)
+                    {
+                        printf(RED "Este ingrediente já foi adicionado ao produto.\n" RESET);
+                        ingredienteRepetido = 1;
+                        break;
+                    }
+                }
+
+                if (!ingredienteRepetido)
+                {
+                    cardap[0].listaIngredientes[cardap[0].qtdIngredientes] = codigoIngrediente;
+                    cardap[0].qtdIngredientes++;
+                }
+
                 break; // Sai do loop, uma vez que o ingrediente foi encontrado e adicionado.
             }
         }
 
-        if (!ingredienteExiste) printf(RED "Cï¿½digo de ingrediente inexistente ou desativado. Tente novamente.\n" RESET);
+        if (!ingredienteExiste) printf(RED "Código de ingrediente inexistente ou desativado. Tente novamente.\n" RESET);
     }
 
     printf("Insira o valor do produto: ");
 
     while (1)
     {
-        // Lï¿½ a entrada como uma string
+        // Lê a entrada como uma string
         if (fgets(buffer, sizeof(buffer), stdin) != NULL)
         {
-            // Verifica se a string contï¿½m apenas dï¿½gitos e ponto decimal
+            // Verifica se a string contém apenas dígitos e ponto decimal
             char* endptr;
             cardap[0].preco = strtod(buffer, &endptr);
 
             if (endptr == buffer || *endptr != '\n')
             {
-                // A conversï¿½o falhou ou hï¿½ caracteres nï¿½o convertidos
-                printf("Entrada invï¿½lida. Por favor, insira um valor vï¿½lido: ");
+                // A conversão falhou ou há caracteres não convertidos
+                printf("Entrada inválida. Por favor, insira um valor válido: ");
             }
             else
             {
@@ -90,13 +117,13 @@ void adicionarProdutoCardapio()
         {
             // Limpa o buffer de entrada em caso de erro
             while (getchar() != '\n');
-            printf("Erro na leitura. Por favor, insira um valor vï¿½lido: ");
+            printf("Erro na leitura. Por favor, insira um valor válido: ");
         }
     }
 
     fwrite(&cardap[0], sizeof(cardapio), 1, pFile);  // Escreve os dados do produto no arquivo.
 
-    free(cardap);  // Libera a memï¿½ria alocada para a estrutura cardapio.
+    free(cardap);  // Libera a memória alocada para a estrutura cardapio.
     fclose(pFile);  // Fecha o arquivo "cardapio.txt".
     fclose(pFile1); // Fecha o arquivo "estoque_ingredientes.txt".
 }
